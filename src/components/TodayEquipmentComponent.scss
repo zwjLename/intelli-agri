@@ -1,0 +1,16 @@
+@import "../index.scss";
+.equipment-btn {
+  width: 140px;
+  height: 30px;
+  line-height: 30px;
+  color: $word;
+  font-weight: bold;
+  margin-left: -5px;
+  border-bottom: 1px solid $bg;
+  &:hover {
+    border-bottom: 1px solid $word;
+  }
+}
+.btn-highlight {
+  border-bottom: 1px solid $word;
+}

@@ -1,24 +1,108 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.scss";
+import hightLight from "./imgs/light.png";
+import target from "./imgs/target.png";
+import moment from "moment"
+import { Weather } from "./components/Weather";
+import { RealTime } from "./components/RealTime";
+import { History } from "./components/Histrory";
+import { ConditionRealTime } from "./components/ConditionRealTime";
+import { TodayStatistics } from "./components/TodayStatistics";
+import { MapComponent } from "./components/MapComponent";
 
+const WEEK = ['星期日','星期一', '星期二', '星期三', '星期四','星期五','星期六']
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <div className="left">
+          <div className="prefix-holder">
+            <div className="header-pic-left"></div>
+          </div>
+          <div className="slash-holder"></div>
+        </div>
+        <div className="content flex-column">
+          <div className="title">
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+            <div className="title-word"></div>
+          </div>
+          <div className="subtitle">
+            <img src={target} className="ml10" />
+            <div className="ml10">INTELLTGENT</div>
+            <div className="ml20">JIANGNING</div>
+            <div className="ml20">PRODUCT</div>
+          </div>
+          {/*  */}
+        </div>
+        
+        <div className="right">
+          <div className="slash-holder"></div>
+          <div className="prefix-holder">
+            <div className="header-pic-right"></div>
+          </div>
+        </div>
       </header>
-    </div>
+      <img src={hightLight} className="hight-light" />
+      <div className="main-content">
+        <div className="left">
+          <div className="title">
+            <div className="word">智慧水产</div>
+            <div className="word">智慧乡村</div>
+            <div className="word">农业电商</div>
+            <div className="word">智慧农安</div>
+          </div>
+          <div className="flex-column main mt10">
+            <div className="flex main-top">
+              <div className="main-part">
+                <Weather />
+              </div>
+              <div className="main-part ml20"><RealTime /></div>
+            </div>
+            <div className="main-part-bottom"><History /></div>
+          </div>
+        </div>
+        <div className="left-slash-holder"></div>
+        <div className="map">
+          <div className="map-content mt20">
+        <MapComponent />
+          </div>
+        </div>
+        <div className="right-slash-holder"></div>
+        <div className="right">
+          <div className="title">
+            <div className="word">智慧水产</div>
+            <div className="word">智慧乡村</div>
+            <div className="word">农业电商</div>
+            <div className="word">智慧农安</div>
+          </div>
+          <div className="flex-column main mt10">
+            <div className="main-top ">
+            <ConditionRealTime />
+            </div>
+            <div className="main-part-bottom"><TodayStatistics /></div>
+          </div>
+        </div>
+      </div>
+      <footer className="flex">
+        <div className="left">
+          <div className="line"></div>
+        </div>
+        <div className="left-slash-holder"></div>
+        <div className="map flex flex-center">
+          <div>{moment().format("YYYY-MM-DD")}</div>
+          <div className="ml10">{WEEK[moment().weekday()]}</div>
+          <div className="ml10">{moment().format("HH:mm")}</div>
+        </div>
+        <div className="right-slash-holder"></div>
+        <div className="right"><div className="line"></div></div>
+      </footer>
+    </>
   );
 }
 
