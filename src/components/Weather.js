@@ -8,7 +8,7 @@ export const Weather = () => {
       const keys = Object.keys(WeatherItem);
       return keys.map((ele, ind) => <li key={ind}>{WeatherItem[ele]}: xxx</li>);
     },
-    [WeatherItem]
+    []
   );
   return (
     <div className="content-component weather">
