@@ -6,7 +6,8 @@ export const ButtonComponent = ({
   activeKey = Attr.warm,
   className = "",
   style = {},
-  onChange = () => {},
+  onChange = () => {
+  },
 }) => {
   const keys = Object.keys(AttrItem);
   return (

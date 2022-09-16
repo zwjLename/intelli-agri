@@ -1,0 +1,23 @@
+@import "../index.scss";
+.meteorology {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  .content-title {
+    flex: 0 0 30px;
+    padding-top: 0 !important;
+  }
+  .detail {
+    display: flex;
+    height: calc(100% - 30px);
+  }
+  .weather {
+    width: calc(30% - 5px);
+    height: 100%;
+  }
+  .realtime {
+    width: calc(70% - 5px);
+    height: 100%;
+  }
+}

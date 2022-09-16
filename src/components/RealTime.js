@@ -2,15 +2,30 @@ import * as echarts from "echarts";
 import React from "react";
 import { ButtonComponent } from "./ButtonComponent";
 import { ChartComponent } from "./ChartComponent";
-import { AttrItem, TypeToOption, ChartType } from "./const.ts";
+import { AttrItem, TypeToOption, ChartType, Time } from "./const.ts";
+import { connect } from "react-redux";
+import { hisAggrQuery } from "../api/api";
 
-export const RealTime = () => {
+const RealTimeUI = ({
+  time
+}) => {
   const [attri, setAttri] = React.useState(Attr.warm);
   const defaultOptions = TypeToOption[ChartType.RealTime];
   const [options, setOptions] = React.useState(defaultOptions);
 
   React.useEffect(
     () => {
+      // todo 监听time的变化
+      console.log('*** ', time);
+      hisAggrQuery({
+        cell_ids: '84,85',
+        snp_types: "do,ph",
+        start_time: "2022-09-03 00:00:00",
+        end_time: '2022-09-03 02:00:00'
+      }).then(res => {
+        console.log("--- 返回值：", res);
+      });
+
       if (attri !== Attr.warm) {
         const optionscp = defaultOptions;
         optionscp.series[0].name = AttrItem[attri];
@@ -20,13 +35,13 @@ export const RealTime = () => {
         setOptions(defaultOptions);
       }
     },
-    [attri, defaultOptions]
+    [attri, defaultOptions, time]
   );
+
   return (
     <div className="content-component realTime">
-      <div className="content-title ml20">实时数据</div>
       <div className="content">
-        {/* <div> */}
+        <span>{time}</span>
         <ButtonComponent
           activeKey={attri}
           className="ml20"
@@ -43,3 +58,5 @@ export const RealTime = () => {
     </div>
   );
 };
+
+export const RealTime = connect(state => ({time: state.time}), {})(RealTimeUI);

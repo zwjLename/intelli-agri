@@ -24,7 +24,7 @@ export const TodayEquipmentComponent = ({ activeKey, onChange = () => {} }) => {
   );
   return (
     <div className="content-component weather">
-      <div className="content-title ml20">今日设备统计</div>
+      {/* <div className="content-title ml20">今日设备统计</div> */}
       <div className="content ml20">{ListComponent}</div>
     </div>
   );

@@ -5,7 +5,8 @@
   line-height: 30px;
   color: $content-title;
   font-weight: bold;
-  text-align: center;
+  // text-align: center;
+  padding-left: 20px;
   &:hover {
     border-left: 1px solid $content-title;
   }

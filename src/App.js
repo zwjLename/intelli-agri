@@ -1,14 +1,15 @@
 import React from "react";
 import "./App.scss";
+import 'antd/dist/antd.css';
+
 import hightLight from "./imgs/light.png";
 import target from "./imgs/target.png";
-import moment from "moment"
-import { Weather } from "./components/Weather";
-import { RealTime } from "./components/RealTime";
-import { History } from "./components/Histrory";
-import { ConditionRealTime } from "./components/ConditionRealTime";
-import { TodayStatistics } from "./components/TodayStatistics";
+import moment from "moment";
+import { Meteorology } from "./components/Meteorology";
+import { FarmTime } from "./components/FarmTime";
 import { MapComponent } from "./components/MapComponent";
+import { TerminalManage } from "./components/TerminalManage";
+import { TerminalData } from "./components/TerminalData";
 
 const WEEK = ['星期日','星期一', '星期二', '星期三', '星期四','星期五','星期六']
 function App() {
@@ -40,7 +41,7 @@ function App() {
           </div>
           {/*  */}
         </div>
-        
+
         <div className="right">
           <div className="slash-holder"></div>
           <div className="prefix-holder">
@@ -58,19 +59,18 @@ function App() {
             <div className="word">智慧农安</div>
           </div>
           <div className="flex-column main mt10">
-            <div className="flex main-top">
-              <div className="main-part">
-                <Weather />
-              </div>
-              <div className="main-part ml20"><RealTime /></div>
+            <div className="flex left-main-top">
+              <Meteorology />
             </div>
-            <div className="main-part-bottom"><History /></div>
+            <div className="left-main-bottom">
+              <FarmTime />
+            </div>
           </div>
         </div>
         <div className="left-slash-holder"></div>
         <div className="map">
           <div className="map-content mt20">
-        <MapComponent />
+            <MapComponent />
           </div>
         </div>
         <div className="right-slash-holder"></div>
@@ -83,9 +83,13 @@ function App() {
           </div>
           <div className="flex-column main mt10">
             <div className="main-top ">
-            <ConditionRealTime />
+            {/* <ConditionRealTime /> */}
+              <TerminalManage />
             </div>
-            <div className="main-part-bottom"><TodayStatistics /></div>
+            <div className="main-part-bottom">
+              {/* <TodayStatistics /> */}
+              <TerminalData />
+            </div>
           </div>
         </div>
       </div>

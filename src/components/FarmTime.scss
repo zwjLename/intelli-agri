@@ -1,0 +1,17 @@
+@import "../index.scss";
+.farm-time {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .menu {
+    height: 35%;
+    padding: 0 20px;
+  }
+  .detail {
+    height: 65%;
+    padding: 0 20px;
+  }
+  .chart {
+    height: 100%;
+  }
+}

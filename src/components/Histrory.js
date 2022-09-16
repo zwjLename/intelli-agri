@@ -6,7 +6,7 @@ import { TimeComponent } from "./TimeComponent";
 
 export const History = () => {
   const [attri, setAttri] = React.useState(Attr.warm); // 属性
-  const [period, setPeriod] = React.useState(Time.threeDay); // 时间
+  const [period, setPeriod] = React.useState(Time.oneWeek); // 时间
   const defaultOptions = TypeToOption[ChartType.History];
   const [options, setOptions] = React.useState(defaultOptions);
 

@@ -187,6 +187,21 @@ header {
   .main-top {
     height: 50%;
   }
+
+
+  .left-main-top {
+    height: 40%;
+    background: url("../public/bg1.svg") no-repeat;
+    background-size: cover;
+  }
+  .left-main-bottom {
+    width: 100%;
+    height: calc(60% - 10px);
+    background: url("../public/bg1.svg") no-repeat;
+    background-size: cover;
+  }
+
+
   .map {
     width: 30%;
     height: 100%;

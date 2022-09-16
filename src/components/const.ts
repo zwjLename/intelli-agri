@@ -29,14 +29,16 @@ export const AttrItem = {
 };
 
 export enum Time {
-  threeDay,
+  oneWeek,
   oneMonth,
   threeMonth,
+  oneYear
 }
 export const TimeItem = {
-  [Time.threeDay]: "近三天",
-  [Time.oneMonth]: "近一月",
-  [Time.threeMonth]: "近三月",
+  [Time.oneWeek]: "近7天",
+  [Time.oneMonth]: "近1月",
+  [Time.threeMonth]: "近3月",
+  [Time.oneYear]: "近1年",
 };
 
 export enum EquipmentKey {

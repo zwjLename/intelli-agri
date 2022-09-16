@@ -1,8 +1,11 @@
 import React from "react";
-import { WeatherItem } from "./const.ts";
+import { WeatherItem, Time } from "./const.ts";
 import "./style.scss";
+import { TimeComponent } from "./TimeComponent";
 
 export const Weather = () => {
+  const [period, setPeriod] = React.useState(Time.oneWeek); // 时间
+
   const ListComponent = React.useMemo(
     () => {
       const keys = Object.keys(WeatherItem);
@@ -10,11 +13,12 @@ export const Weather = () => {
     },
     []
   );
+
   return (
     <div className="content-component weather">
-      <div className="content-title ml20">农业气象数据</div>
-      <div className="content ml20">
-        <ul>{ListComponent}</ul>
+      <div className="content">
+        {/* <ul>{ListComponent}</ul> */}
+        <TimeComponent  activeKey={period} />
       </div>
     </div>
   );
