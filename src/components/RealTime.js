@@ -41,7 +41,7 @@ const RealTimeUI = ({
   return (
     <div className="content-component realTime">
       <div className="content">
-        <span>{time}</span>
+        {/* <span>{time}</span> */}
         <ButtonComponent
           activeKey={attri}
           className="ml20"
