@@ -52,17 +52,13 @@ function App() {
       <img src={hightLight} className="hight-light" />
       <div className="main-content">
         <div className="left">
-          <div className="title">
-            <div className="word">智慧水产</div>
-            <div className="word">智慧乡村</div>
-            <div className="word">农业电商</div>
-            <div className="word">智慧农安</div>
-          </div>
           <div className="flex-column main mt10">
             <div className="flex left-main-top">
-              <Meteorology />
+                {/* 气象走势 */}
+              <Meteorology /> 
             </div>
             <div className="left-main-bottom">
+              {/* 农时分析 */}
               <FarmTime />
             </div>
           </div>
@@ -75,12 +71,6 @@ function App() {
         </div>
         <div className="right-slash-holder"></div>
         <div className="right">
-          <div className="title">
-            <div className="word">智慧水产</div>
-            <div className="word">智慧乡村</div>
-            <div className="word">农业电商</div>
-            <div className="word">智慧农安</div>
-          </div>
           <div className="flex-column main mt10">
             <div className="main-top ">
             {/* <ConditionRealTime /> */}

@@ -1,7 +1,7 @@
 import React from "react";
 import { TimeItem } from "./const.ts";
 import "./TimeComponent.scss";
-import { changeTime } from "../redux/actions/time";
+import { changeTime } from "../store/actions/time";
 import { connect } from "react-redux";
 
 const TimeComponentUI = ({
