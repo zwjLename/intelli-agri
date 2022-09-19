@@ -12,7 +12,6 @@ const TimeComponentUI = ({
 }) => {
   const keys = Object.keys(TimeItem);
   const onChange = (time) => {
-    // console.log('&&&&&', time)
     changeTime(time);
   };
   return (
@@ -25,7 +24,7 @@ const TimeComponentUI = ({
             ? "time-btn-highlight"
             : ""}`}
           onClick={() => {
-            onChange(ele);
+            onChange(ele * 1);
           }}
         >
           {TimeItem[ele]}

@@ -28,17 +28,28 @@ export const AttrItem = {
   [Attr.wind]: "风",
 };
 
+// 下发的参数
+export const AttrParam = {
+  [Attr.warm]: "temp",
+  [Attr.wet]: "humi",
+  [Attr.light]: "illu",
+  [Attr.rain]: "rain15Min",
+  [Attr.wind]: "windSpd_jc",
+};
+
 export enum Time {
+  today,
   oneWeek,
   oneMonth,
   threeMonth,
-  oneYear,
+  // oneYear,
 }
 export const TimeItem = {
+  [Time.today]: "当天",
   [Time.oneWeek]: "近7天",
   [Time.oneMonth]: "近1月",
   [Time.threeMonth]: "近3月",
-  [Time.oneYear]: "近1年",
+  // [Time.oneYear]: "近1年",
 };
 
 export enum EquipmentKey {
@@ -88,7 +99,14 @@ export const RealTimeOption = {
     type: "category",
     boundaryGap: false,
     ...axisCommonOptions,
-    data: ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"], // date
+    data: [], // data
+    axisLabel: {
+      formatter: (value, index) => {
+        // 横坐标折行显示
+        const vAttr = value.split(" ");
+        return vAttr[0].replaceAll("-", "") + "\n" + vAttr[1];
+      }
+    }
   },
   yAxis: {
     type: "value",
@@ -107,7 +125,7 @@ export const RealTimeOption = {
       type: "line",
       stack: "Total",
       smooth: true,
-      data: [120, 132, 101, 134, 90, 230, 210], // data
+      data: [], // data
       itemStyle: {
         normal: {
           color: "#28b9d2",

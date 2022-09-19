@@ -2,12 +2,14 @@ import * as echarts from "echarts";
 import React from "react";
 import { ButtonComponent } from "./ButtonComponent";
 import { ChartComponent } from "./ChartComponent";
-import { AttrItem, TypeToOption, ChartType, Time } from "./const.ts";
+import { Attr, AttrItem, TypeToOption, ChartType, AttrParam } from "./const.ts";
 import { connect } from "react-redux";
 import { hisAggrQuery } from "../api/api";
+import { getTimePeriod, getRealTimeOption } from "../utils";
 
 const RealTimeUI = ({
-  time
+  time,
+  mapData
 }) => {
   const [attri, setAttri] = React.useState(Attr.warm);
   const defaultOptions = TypeToOption[ChartType.RealTime];
@@ -15,48 +17,55 @@ const RealTimeUI = ({
 
   React.useEffect(
     () => {
-      // todo 监听time的变化
-      console.log('*** ', time);
+      // 监听time、menu以及map的变化
+      const {startTime, endTime} = getTimePeriod(time);
       hisAggrQuery({
-        cell_ids: '84,85',
-        snp_types: "do,ph",
-        start_time: "2022-09-03 00:00:00",
-        end_time: '2022-09-03 02:00:00'
+        cell_ids: mapData.cellid + '',
+        snp_types: AttrParam[attri],
+        start_time: startTime,
+        end_time: endTime
       }).then(res => {
-        console.log("--- 返回值：", res);
+        if (res) {
+          const chartData = res[0] ? res[0].sntvs[0] : {};
+          // 重绘chart
+          setOptions(getRealTimeOption(chartData, AttrItem[attri]));
+        }
       });
 
-      if (attri !== Attr.warm) {
-        const optionscp = defaultOptions;
-        optionscp.series[0].name = AttrItem[attri];
-        optionscp.series[0].data = [20, 32, 11, 34, 90, 30, 10];
-        setOptions(optionscp);
-      } else {
-        setOptions(defaultOptions);
-      }
+      // if (attri !== Attr.warm) {
+      //   const optionscp = defaultOptions;
+      //   optionscp.series[0].name = AttrItem[attri];
+      //   optionscp.series[0].data = [20, 32, 11, 34, 90, 30, 10];
+      //   setOptions(optionscp);
+      // } else {
+      //   setOptions(defaultOptions);
+      // }
     },
-    [attri, defaultOptions, time]
+    [attri, time, mapData.cellid]
   );
 
   return (
     <div className="content-component realTime">
-      <div className="content">
-        {/* <span>{time}</span> */}
-        <ButtonComponent
-          activeKey={attri}
-          className="ml20"
-          onChange={e => {
-            setAttri(e);
-          }}
-        />
-        <ChartComponent
-          type={ChartType.RealTime}
-          style={{ marginTop: "10px" }}
-          options={options}
-        />
-      </div>
+      <ButtonComponent
+        activeKey={attri}
+        className="ml20"
+        onChange={e => {
+          setAttri(e);
+        }}
+      />
+      <ChartComponent
+        type={ChartType.RealTime}
+        style={{ marginTop: "10px" }}
+        options={options}
+      />
     </div>
   );
 };
 
-export const RealTime = connect(state => ({time: state.time}), {})(RealTimeUI);
+export const RealTime = connect(
+  state => ({
+    time: state.time,
+    mapData: state.mapData
+  }),
+  {}
+)(RealTimeUI);

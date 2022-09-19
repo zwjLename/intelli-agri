@@ -17,6 +17,7 @@ export const termSta = async payload => {
         params: payload
     })
 }
+
 // 历史数据
 export const hisAggrQuery = async payload => {
     return await axios({
