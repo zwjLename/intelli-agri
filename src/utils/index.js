@@ -1,6 +1,6 @@
 import * as moment from "moment";
 import { cloneDeep } from "lodash";
-import { Time, TypeToOption, ChartType } from "../components/const.ts";
+import { Time, TypeToOption, ChartType, EquipmentKey } from "../components/const.ts";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
 
@@ -47,4 +47,30 @@ export const getRealTimeOption = (data, name) => {
   });
 
   return option;
+};
+
+// 处理终端状态数据用于页面展示
+export const parseTerminalData = (data) => {
+  if (!data || data.length === 0) return {};
+
+  let dailyrecvnumSum = 0;
+  let dailyplatnumSum = 0;
+  let dailyrptsecSum = 0;
+  let minvoltSum = 0;
+
+  data.map((item, _) => {
+    dailyrecvnumSum += item.dailyrecvnum; // 当日收到上报数
+    dailyplatnumSum += item.dailyplatnum; // 当日向省平台上报成功数
+    dailyrptsecSum += item.dailyrptsec; // 当日的平均上报时间间隔
+    minvoltSum += item.minvolt; // 最小电压
+  });
+
+  return {
+    [EquipmentKey.reportVolumn]: Number(Number(dailyrecvnumSum / data.length).toFixed(2)),
+    [EquipmentKey.reportDiff]: "???",
+    [EquipmentKey.currentInterval]: "?????",
+    [EquipmentKey.averageInterval]: Number(Number(dailyrptsecSum / data.length).toFixed(2)),
+    [EquipmentKey.electricity]: Number(minvoltSum / data.length).toFixed(2),
+    [EquipmentKey.reportSuccess]: Number(dailyplatnumSum / dailyrecvnumSum * 100).toFixed(2)+ "%"
+  }
 };

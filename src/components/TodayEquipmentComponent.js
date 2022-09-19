@@ -3,7 +3,28 @@ import {connect} from "react-redux";
 import { EquipmentItem } from "./const.ts";
 import "./TodayEquipmentComponent.scss";
 import { getTerminalData } from "../api/api";
-import { getTimePeriod } from "../utils";
+import { getTimePeriod, parseTerminalData } from "../utils";
+
+const ListComponent = ({
+  activeKey,
+  onChange,
+  displayData
+}) => {
+  const keys = Object.keys(EquipmentItem);
+  return keys.map((ele, ind) => (
+    <div
+      key={`todayEquipment-${ind}`}
+      className={`equipment-btn pointer ${Number(ele) === Number(activeKey)
+        ? "btn-highlight"
+        : ""}`}
+      onClick={() => {
+        onChange(ele);
+      }}
+    >
+      {EquipmentItem[ele]}：{displayData[ele]}
+    </div>
+  ));
+};
 
 const TodayEquipmentComponentUI = ({
   termid,
@@ -11,36 +32,37 @@ const TodayEquipmentComponentUI = ({
   activeKey,
   onChange = () => {}
 }) => {
-  const ListComponent = React.useMemo(
-    () => {
-      const keys = Object.keys(EquipmentItem);
-      return keys.map((ele, ind) => (
-        <div
-          key={`todayEquipment-${ind}`}
-          className={`equipment-btn pointer ${Number(ele) === Number(activeKey)
-            ? "btn-highlight"
-            : ""}`}
-          onClick={() => {
-            onChange(ele);
-          }}
-        >
-          {EquipmentItem[ele]}
-        </div>
-      ));
-    },
-    [activeKey, onChange]
-  );
+  const [displayData, setDisplayData] = React.useState({});
+  // const ListComponent = React.useMemo(
+  //   () => {
+  //     const keys = Object.keys(EquipmentItem);
+  //     return keys.map((ele, ind) => (
+  //       <div
+  //         key={`todayEquipment-${ind}`}
+  //         className={`equipment-btn pointer ${Number(ele) === Number(activeKey)
+  //           ? "btn-highlight"
+  //           : ""}`}
+  //         onClick={() => {
+  //           onChange(ele);
+  //         }}
+  //       >
+  //         {EquipmentItem[ele]}：{displayData[ele]}
+  //       </div>
+  //     ));
+  //   },
+  //   [activeKey, onChange, displayData]
+  // );
 
   React.useEffect(
     () => {
-      const {start_time, end_time} = getTimePeriod(time);
+      const {startTime, endTime} = getTimePeriod(time);
       // 查询地图选中的生产单元的详细终端状态数据
       getTerminalData({
         termid,
-        start_time,
-        end_time
+        start_time: startTime,
+        end_time: endTime
       }).then(res => {
-        console.log('@@@@@@', res);
+        setDisplayData(parseTerminalData(res));
       });
     },
     [termid, time]
@@ -48,7 +70,13 @@ const TodayEquipmentComponentUI = ({
 
   return (
     <div className="content-component weather">
-      <div className="content ml20">{ListComponent}</div>
+      <div className="content">
+          <ListComponent
+            activeKey={activeKey}
+            onChange={onChange}
+            displayData={displayData}
+          />
+        </div>
     </div>
   );
 };
