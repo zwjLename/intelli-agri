@@ -51,26 +51,40 @@ export const getRealTimeOption = (data, name) => {
 
 // 处理终端状态数据用于页面展示
 export const parseTerminalData = (data) => {
-  if (!data || data.length === 0) return {};
+  const len = data.length;
+  const unit = "min";
+  if (!data || len === 0) return {};
 
   let dailyrecvnumSum = 0;
   let dailyplatnumSum = 0;
   let dailyrptsecSum = 0;
-  let minvoltSum = 0;
+  let avgvoltSum = 0;
 
   data.map((item, _) => {
     dailyrecvnumSum += item.dailyrecvnum; // 当日收到上报数
     dailyplatnumSum += item.dailyplatnum; // 当日向省平台上报成功数
     dailyrptsecSum += item.dailyrptsec; // 当日的平均上报时间间隔
-    minvoltSum += item.minvolt; // 最小电压
+    avgvoltSum += item.avgvolt; // 平均电压
   });
 
   return {
-    [EquipmentKey.reportVolumn]: Number(Number(dailyrecvnumSum / data.length).toFixed(2)),
-    [EquipmentKey.reportDiff]: "???",
-    [EquipmentKey.currentInterval]: "?????",
-    [EquipmentKey.averageInterval]: Number(Number(dailyrptsecSum / data.length).toFixed(2)),
-    [EquipmentKey.electricity]: Number(minvoltSum / data.length).toFixed(2),
+    [EquipmentKey.reportVolumn]: dailyrecvnumSum + "条",
+    // 最近上报时间差: 昨天的dailyrptsec；若入参是“当天”的话，就返回当天的dailyrptsec；
+    [EquipmentKey.reportDiff]:
+      convertSecToMin(
+          len > 1 ?
+          data[len - 2].dailyrptsec :
+          data[len - 1].dailyrptsec
+      ) + unit,
+    // 当前上报时间间隔: 当天的dailyrptsec；
+    [EquipmentKey.currentInterval]: convertSecToMin(data[len - 1].dailyrptsec) + unit,
+    // 平均上报时间间隔: 所有的dailyrptsec的平均值；
+    [EquipmentKey.averageInterval]: convertSecToMin(dailyrptsecSum / len) + unit,
+    [EquipmentKey.electricity]: Number(avgvoltSum).toFixed(2) + "v",
     [EquipmentKey.reportSuccess]: Number(dailyplatnumSum / dailyrecvnumSum * 100).toFixed(2)+ "%"
   }
+};
+
+export const convertSecToMin = (sec) => {
+  return Math.floor((Number(sec) / 60));
 };
