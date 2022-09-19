@@ -10,7 +10,7 @@ import { MeteorologyMenu } from "./MeteorologyMenu"
 export const TerminalManage = () => {
   const defaultOptions = TypeToOption[ChartType.Equip];
   const [options, setOptions] = React.useState(defaultOptions);
-  const [period, setPeriod] = React.useState(Time.oneWeek); // 时间
+  const [period, setPeriod] = React.useState(Time.today); // 时间
 
   return (
     <div className="terminal-manage">
@@ -29,7 +29,7 @@ export const TerminalManage = () => {
           </div>
         </div>
         <div className="time-part ml20">
-          <TimeComponent activeKey={period} />
+          <TimeComponent activeKey={period} onChange={e => {setPeriod(e); }}/>
         </div>
       </div>
     </div>

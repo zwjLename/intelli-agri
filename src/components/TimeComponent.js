@@ -1,19 +1,14 @@
 import React from "react";
 import { TimeItem } from "./const.ts";
 import "./TimeComponent.scss";
-import { changeTime } from "../store/actions/time";
-import { connect } from "react-redux";
 
-const TimeComponentUI = ({
+export const TimeComponent = ({
   className = "",
   style = {},
   activeKey = "",
-  changeTime = () => {}
+  onChange,
 }) => {
   const keys = Object.keys(TimeItem);
-  const onChange = (time) => {
-    changeTime(time);
-  };
   return (
     <div className={`flex-column ${className} ml10`} style={style}>
       {keys.map((ele, ind) => (
@@ -34,7 +29,3 @@ const TimeComponentUI = ({
   );
 };
 
-export const TimeComponent = connect(
-  state => ({time: state.time}),
-  {changeTime}
-)(TimeComponentUI);

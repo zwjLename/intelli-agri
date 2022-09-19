@@ -1,9 +1,12 @@
 import React from "react";
 import { TodayEquipmentComponent } from "./TodayEquipmentComponent";
-import { EquipmentKey } from "./const.ts";
+import { TimeComponent } from "./TimeComponent";
+import { EquipmentKey, Time } from "./const.ts";
+import "./TerminalData.scss";
 
 // 终端数据
 export const TerminalData = () => {
+  const [time, setTime] = React.useState(Time.today);
   const [activeKey, setActiveKey] = React.useState(EquipmentKey.reportVolumn);
 
   const onChange = e => {
@@ -11,12 +14,15 @@ export const TerminalData = () => {
   };
 
   return (
-    <div className="content-component history ">
-      <div className="flex">
-        <div className="content-title ml20">终端状态数据</div>
-      </div>
-      <div className="statistics-echart-com">
-        <TodayEquipmentComponent onChange={onChange} activeKey={activeKey} />
+    <div className="terminal-data">
+      <div className="content-title">终端状态数据</div>
+      <div className="content-list">
+        <div className="chart-part statistics-echart-com">
+          <TodayEquipmentComponent onChange={onChange} activeKey={activeKey} time={time}/>
+        </div>
+        <div className="time-part">
+          <TimeComponent activeKey={time} onChange={e => {setTime(e); }}/>
+        </div>
       </div>
     </div>
   );

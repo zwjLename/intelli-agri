@@ -65,7 +65,7 @@ export const EquipmentItem = {
   [EquipmentKey.reportDiff]: "最近上报时间差",
   [EquipmentKey.currentInterval]: "当前上报时间间隔",
   [EquipmentKey.averageInterval]: "平均上报时间间隔",
-  [EquipmentKey.reportSuccess]: "上报成功率",
+  [EquipmentKey.reportSuccess]: "省台成功率",
   [EquipmentKey.electricity]: "电量",
 };
 
