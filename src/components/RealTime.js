@@ -28,6 +28,8 @@ const RealTimeUI = ({
         if (res) {
           const chartData = res[0] ? res[0].sntvs[0] : {};
           // 重绘chart
+          // todo 直接调用setOptions，页面chart不渲染
+          // setOptions(getRealTimeOption(chartData, AttrItem[attri]));
           setOptions((pre) => ({
             ...pre,
             ...getRealTimeOption(chartData, AttrItem[attri])
