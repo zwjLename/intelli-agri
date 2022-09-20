@@ -37,6 +37,18 @@ export const AttrParam = {
   [Attr.wind]: "windSpd_jc",
 };
 
+export enum MAttr {
+  data,
+  battery,
+  rate
+}
+export const MAttrItem = {
+  [MAttr.data]: "数据量",
+  [MAttr.battery]: "电量",
+  [MAttr.rate]: "省台率"
+};
+
+
 export enum Time {
   today,
   oneWeek,

@@ -1,22 +1,20 @@
 import "./MeteorologyMenu.scss"
-
-import { Menu } from 'antd';
+import { Menu } from "antd";
+import { MAttrItem } from "./const.ts";
 
 // 气象菜单
-export const MeteorologyMenu = () => {
-
+export const MeteorologyMenu = ({
+  activeKey,
+  onChange
+}) => {
   return (
     <div className="meteorology-menu">
-      <Menu mode="horizontal" defaultSelectedKeys={['data']}>
-        <Menu.Item key="data">
-          数据量
-        </Menu.Item>
-        <Menu.Item key="battery">
-          电量
-        </Menu.Item>
-        <Menu.Item key="rate">
-          省台率
-        </Menu.Item>
+      <Menu mode="horizontal" defaultSelectedKeys={[activeKey]} onSelect={onChange}>
+        {
+          Object.keys(MAttrItem).map((item, _) => (
+            <Menu.Item key={item}>{MAttrItem[item]}</Menu.Item>
+          ))
+        }
       </Menu>
     </div>
   );

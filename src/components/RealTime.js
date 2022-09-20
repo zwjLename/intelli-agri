@@ -28,18 +28,12 @@ const RealTimeUI = ({
         if (res) {
           const chartData = res[0] ? res[0].sntvs[0] : {};
           // 重绘chart
-          setOptions(getRealTimeOption(chartData, AttrItem[attri]));
+          setOptions((pre) => ({
+            ...pre,
+            ...getRealTimeOption(chartData, AttrItem[attri])
+          }));
         }
       });
-
-      // if (attri !== Attr.warm) {
-      //   const optionscp = defaultOptions;
-      //   optionscp.series[0].name = AttrItem[attri];
-      //   optionscp.series[0].data = [20, 32, 11, 34, 90, 30, 10];
-      //   setOptions(optionscp);
-      // } else {
-      //   setOptions(defaultOptions);
-      // }
     },
     [attri, time, mapData.cellid]
   );

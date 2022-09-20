@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { message } from "antd";
+
 const service = axios.create({
     baseURL: 'http://111.229.163.181:8009',
     timeout: 60 * 1000, // 请求超时时间
@@ -10,11 +12,10 @@ const service = axios.create({
 const errorHandler = error => {
     const { response } = error;
     if (response && response.status) {
-
+        message.error(response.data.msg);
         return Promise.reject();
     }
     if (!response) {
-
         return Promise.reject();
     }
     return Promise.reject(error);

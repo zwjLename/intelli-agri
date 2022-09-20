@@ -18,3 +18,11 @@
   background-color: rgba(255, 255, 255, .3);
   border-bottom: 1px solid @text-color;
 }
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu {
+  padding: 0 10px;
+}
+.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
+  right: 5px;
+  left: 5px;
+}

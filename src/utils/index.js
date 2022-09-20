@@ -1,5 +1,4 @@
 import * as moment from "moment";
-import { cloneDeep } from "lodash";
 import { Time, TypeToOption, ChartType, EquipmentKey } from "../components/const.ts";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
@@ -38,13 +37,17 @@ export const getTimePeriod = (time) => {
 // 获取气象走势曲线图的option
 export const getRealTimeOption = (data, name) => {
   if (!data.times) return;
-  const option = cloneDeep(TypeToOption[ChartType.RealTime]);
+  const option = TypeToOption[ChartType.RealTime];
 
-  option.series[0].name = name;
-  data.times.map((item, index) => {
-    option.xAxis.data.push(moment(item * 1000).format(FORMAT_STR));
-    option.series[0].data.push(data.values[index]);
+  let xData = [];
+  let yData = [];
+  data.times.forEach((item, index) => {
+    xData.push(moment(item * 1000).format(FORMAT_STR));
+    yData.push(data.values[index]);
   });
+  option.series[0].name = name;
+  option.xAxis.data = xData;
+  option.series[0].data = yData;
 
   return option;
 };
@@ -60,7 +63,7 @@ export const parseTerminalData = (data) => {
   let dailyrptsecSum = 0;
   let avgvoltSum = 0;
 
-  data.map((item, _) => {
+  data.forEach((item, _) => {
     dailyrecvnumSum += item.dailyrecvnum; // 当日收到上报数
     dailyplatnumSum += item.dailyplatnum; // 当日向省平台上报成功数
     dailyrptsecSum += item.dailyrptsec; // 当日的平均上报时间间隔

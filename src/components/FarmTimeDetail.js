@@ -1,15 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
 import { ChartComponent } from "./ChartComponent";
 import { ChartType, TypeToOption } from "./const.ts";
 
 // 农时-详情
-export const FarmTimeDetail = () => {
+const FarmTimeDetailUI = ({
+  type,
+  time,
+  mapData
+}) => {
   const defaultOptions = TypeToOption[ChartType.Statis];
   const [options, setOptions] = React.useState(defaultOptions);
 
-  React.useEffect(()=> {
-    // todo 监测time的变化
-  })
+  React.useEffect(
+    ()=> {
+      // todo 发送请求，重绘chart
+
+    },
+    [type, time, mapData.cellid]
+  );
 
   return (
     <div className="chart">
@@ -21,3 +30,11 @@ export const FarmTimeDetail = () => {
     </div>
   );
 };
+
+export const FarmTimeDetail = connect(
+  (state) =>({
+    time: state.time,
+    mapData: state.mapData
+  }),
+  {}
+)(FarmTimeDetailUI);
