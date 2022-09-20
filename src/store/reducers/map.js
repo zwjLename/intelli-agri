@@ -3,8 +3,8 @@ import { termToCell } from "../../components/const.ts";
 import { current_point } from "../actions/map";
 
 const initState = {
-  termid: 0,
-  cellid: 0,
+  termid: 237,
+  cellid: 97,
 };
 const mapReducer = createReducer(
   {
