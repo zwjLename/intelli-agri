@@ -1,6 +1,6 @@
 import React from "react";
+import "./App.less";
 import "./App.scss";
-import 'antd/dist/antd.css';
 
 import hightLight from "./imgs/light.png";
 import target from "./imgs/target.png";
@@ -55,7 +55,7 @@ function App() {
           <div className="flex-column main mt10">
             <div className="flex left-main-top">
                 {/* 气象走势 */}
-              <Meteorology /> 
+              <Meteorology />
             </div>
             <div className="left-main-bottom">
               {/* 农时分析 */}
