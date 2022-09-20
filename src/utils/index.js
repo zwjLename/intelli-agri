@@ -49,7 +49,7 @@ export const getRealTimeOption = (data, name) => {
   option.xAxis.data = xData;
   option.series[0].data = yData;
 
-  return option;
+  return {...option};
 };
 
 // 处理终端状态数据用于页面展示
