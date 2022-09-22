@@ -1,17 +1,16 @@
-import * as echarts from "echarts";
 import React from "react";
-import { ButtonComponent } from "./ButtonComponent";
 import { ChartComponent } from "./ChartComponent";
 import { Attr, AttrItem, TypeToOption, ChartType, AttrParam } from "./const.ts";
 import { connect } from "react-redux";
 import { hisAggrQuery } from "../api/api";
 import { getTimePeriod, getRealTimeOption } from "../utils";
+import { Menu } from "antd";
 
 const RealTimeUI = ({
   time,
   mapData
 }) => {
-  const [attri, setAttri] = React.useState(Attr.warm);
+  const [attri, setAttri] = React.useState(Attr.warm + "");
   const defaultOptions = TypeToOption[ChartType.RealTime];
   const [options, setOptions] = React.useState(defaultOptions);
 
@@ -40,13 +39,15 @@ const RealTimeUI = ({
 
   return (
     <div className="content-component realTime">
-      <ButtonComponent
-        activeKey={attri}
-        className="ml20"
-        onChange={e => {
-          setAttri(e);
-        }}
-      />
+      <Menu mode="horizontal"
+        defaultSelectedKeys={[attri]}
+        onSelect={menu => setAttri(menu.key)}>
+        {
+          Object.keys(AttrItem).map((item, _) => (
+            <Menu.Item key={item}>{AttrItem[item]}</Menu.Item>
+          ))
+        }
+      </Menu>
       <ChartComponent
         type={ChartType.RealTime}
         style={{ marginTop: "10px" }}

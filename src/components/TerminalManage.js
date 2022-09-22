@@ -20,7 +20,7 @@ export const TerminalManage = () => {
   const [options, setOptions] = React.useState(defaultOptions);
 
   const onMenuChange = (menu) => {
-    setAttri(menu.key)
+    setAttri(menu.key);
   };
 
   // 组件刚挂载时
@@ -78,7 +78,7 @@ export const TerminalManage = () => {
           </div>
         </div>
         <div className="time-part">
-          <TimeComponent activeKey={period} onChange={e => {setPeriod(e)}}/>
+          <TimeComponent activeKey={period} onChange={e => setPeriod(e)}/>
         </div>
       </div>
     </div>
