@@ -34,7 +34,7 @@ export const AttrParam = {
   [Attr.wet]: "humi",
   [Attr.light]: "illu",
   [Attr.rain]: "rain15Min",
-  [Attr.wind]: "windSpd_jc",
+  [Attr.wind]: "windspeed",
 };
 
 export enum MAttr {

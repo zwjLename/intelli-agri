@@ -21,7 +21,8 @@ export const termSta = async payload => {
 // 查询地图选中的生产单元的气象趋势
 export const hisAggrQuery = async payload => {
     return await axios({
-        url: '/opt/hisAggrQuery',
+        // url: '/opt/hisAggrQuery',
+        url: '/opt/termtypeHisQuery',
         method: 'GET',
         params: payload,
     });

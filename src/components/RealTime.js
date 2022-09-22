@@ -20,15 +20,18 @@ const RealTimeUI = ({
       // 监听time、menu以及map的变化
       const {startTime, endTime} = getTimePeriod(time);
       hisAggrQuery({
-        cell_ids: mapData.cellid + '',
-        snp_types: AttrParam[attri],
+        // cell_ids: mapData.cellid + '',
+        term_id: `${mapData.termid}`,
+        // snp_types: AttrParam[attri],
+        type: AttrParam[attri],
         start_time: startTime,
         end_time: endTime
       }).then(res => {
         if (res) {
-          const chartData = res[0] ? res[0].sntvs[0] : {};
+          // const chartData = res[0] ? res[0].sntvs[0] : {};
           // 重绘chart
-          setOptions(getRealTimeOption(chartData, AttrItem[attri]));
+          // setOptions(getRealTimeOption(chartData, AttrItem[attri]));
+          setOptions(getRealTimeOption(res, AttrItem[attri]));
         }
       });
     },
