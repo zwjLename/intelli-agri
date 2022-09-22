@@ -222,7 +222,7 @@ export const EquipOption = {
   xAxis: {
     type: "category",
     ...axisCommonOptions,
-    data: ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"], // date
+    data: [], // data
   },
   yAxis: {
     type: "value",
@@ -238,7 +238,7 @@ export const EquipOption = {
   series: [
     {
       type: "bar",
-      data: [23, 24, 18, 25, 27, 28, 25],
+      data: [], // data
     },
   ],
 };

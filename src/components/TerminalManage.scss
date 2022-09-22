@@ -6,6 +6,9 @@
   .content-title {
     flex: 0 0 30px;
     padding-top: 0 !important;
+    span {
+      text-decoration: underline;
+    }
   }
   .content {
     display: flex;

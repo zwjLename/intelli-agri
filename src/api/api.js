@@ -36,3 +36,21 @@ export const getTerminalData = async payload => {
         params: payload,
     });
 }
+
+// 查询当前终端的在线、离线数量及列表
+export const getTerminalStatus = async payload => {
+    return await axios({
+        url: '/opt/termStaNumLst',
+        method: 'GET',
+        params: payload,
+    });
+}
+
+// 查询一段时间内所有气象终端数据统计
+export const getTerminalHis = async payload => {
+    return await axios({
+        url: '/opt/hisStaByTerm',
+        method: 'GET',
+        params: payload,
+    });
+}

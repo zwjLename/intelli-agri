@@ -1,5 +1,11 @@
 import * as moment from "moment";
-import { Time, TypeToOption, ChartType, EquipmentKey } from "../components/const.ts";
+import { Time,
+  TypeToOption,
+  ChartType,
+  EquipmentKey,
+  MAttr,
+  MAttrItem
+} from "../components/const.ts";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
 
@@ -52,7 +58,7 @@ export const getRealTimeOption = (data, name) => {
   return {...option};
 };
 
-// 处理终端状态数据用于页面展示
+// 处理某一个终端状态数据用于页面展示
 export const parseTerminalData = (data) => {
   const len = data.length;
   const unit = "min";
@@ -90,4 +96,34 @@ export const parseTerminalData = (data) => {
 
 export const convertSecToMin = (sec) => {
   return Math.floor((Number(sec) / 60));
+};
+
+// 获取终端管理-柱状图的option
+export const getEquipOption = (data, type) => {
+  if (!data.length) return;
+  const option = TypeToOption[ChartType.Equip];
+
+  let xData = [];
+  let yData = [];
+  let rate = 0;
+  data.forEach((item, _) => {
+    xData.push(item.termid);
+    switch (type * 1) {
+      case MAttr.data:
+        yData.push(item.recvsum); // 上报数据量
+        break;
+      case MAttr.battery:
+        yData.push(item.voltavg); // 电量
+        break;
+      case MAttr.rate:
+        rate = Number(item.platsum / item.recvsum * 100).toFixed(2);
+        yData.push(rate); // 省台率
+        break;
+    }
+  });
+  option.series[0].name = MAttrItem[type];
+  option.xAxis.data = xData;
+  option.series[0].data = yData;
+
+  return {...option};
 };

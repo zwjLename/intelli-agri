@@ -1,35 +1,70 @@
 import React from "react";
 import { ChartComponent } from "./ChartComponent";
-import { ChartType, TypeToOption, Time, MAttr } from "./const.ts";
+import { ChartType, TypeToOption, Time, MAttr, temids } from "./const.ts";
 import "./style.scss";
 import { TimeComponent } from "./TimeComponent";
 import "./TerminalManage.scss";
-import { MeteorologyMenu } from "./MeteorologyMenu"
+import { MeteorologyMenu } from "./MeteorologyMenu";
+import { getTerminalStatus, getTerminalHis } from "../api/api";
+import { getTimePeriod, getEquipOption } from "../utils";
+
+let termStsList = []; // 暂存所有的终端数据
 
 // 终端管理
 export const TerminalManage = () => {
+  const [onlineNum, setOnlineNum] = React.useState(0); // 终端在线个数
+  const [offlineNum, setOfflineNum] = React.useState(0); // 终端离线个数
+  const [period, setPeriod] = React.useState(Time.today); // 时间
+  const [attri, setAttri] = React.useState(MAttr.data + ""); // 菜单
   const defaultOptions = TypeToOption[ChartType.Equip];
   const [options, setOptions] = React.useState(defaultOptions);
-  const [period, setPeriod] = React.useState(Time.today); // 时间
-  const [attri, setAttri] = React.useState(MAttr.data + "");
 
   const onMenuChange = (menu) => {
-    // console.log('@@@@@@ onMenuChange', typeof menu.key, menu.key);
     setAttri(menu.key)
   };
 
+  // 组件刚挂载时
+  React.useEffect(() => {
+    // 获取终端在线、离线个数
+    getTerminalStatus({
+      term_lst: temids
+    }).then(res => {
+      setOnlineNum(res.onnum);
+      setOfflineNum(res.offnum);
+    });
+  }, []);
+
+  // 时间组件改变时
   React.useEffect(
     () => {
-      // todo 下发请求，重绘chart
-
+      const {startTime, endTime} = getTimePeriod(period);
+      // 下发请求
+      getTerminalHis({
+        term_lst: temids,
+        start_time: startTime,
+        end_time: endTime
+      }).then(res => {
+        // 重绘chart
+        termStsList = res;
+        setOptions(getEquipOption(termStsList, attri));
+      });
     },
-    [attri, period]
+    [period]
+  );
+
+  // 菜单组件改变时
+  React.useEffect(
+    () => {
+      // 重绘chart
+      setOptions(getEquipOption(termStsList, attri));
+    },
+    [attri]
   );
 
   return (
     <div className="terminal-manage">
       <div className="content-title">
-        终端在线：100个，离线3个
+        终端在线：<span>{onlineNum}个</span>，离线：<span>{offlineNum}个</span>
       </div>
       <div className="content">
         <div className="chart-part">
