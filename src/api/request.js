@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from "antd";
 
 const service = axios.create({
-    baseURL: 'http://111.229.163.181:8009',
+    baseURL: 'http://localhost:3000',
     timeout: 60 * 1000, // 请求超时时间
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
@@ -12,7 +12,7 @@ const service = axios.create({
 const errorHandler = error => {
     const { response } = error;
     if (response && response.status) {
-        message.error(response.data.msg);
+        response.data.msg && message.error(response.data.msg);
         return Promise.reject();
     }
     if (!response) {
