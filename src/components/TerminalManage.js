@@ -8,8 +8,6 @@ import { MeteorologyMenu } from "./MeteorologyMenu";
 import { getTerminalStatus, getTerminalHis } from "../api/api";
 import { getTimePeriod, getEquipOption } from "../utils";
 
-let termStsList = []; // 暂存所有的终端数据
-
 // 终端管理
 export const TerminalManage = () => {
   const [onlineNum, setOnlineNum] = React.useState(0); // 终端在线个数
@@ -18,6 +16,7 @@ export const TerminalManage = () => {
   const [attri, setAttri] = React.useState(MAttr.data + ""); // 菜单
   const defaultOptions = TypeToOption[ChartType.Equip];
   const [options, setOptions] = React.useState(defaultOptions);
+  const termStsList = React.useRef([]); // 暂存所有的终端数据
 
   const onMenuChange = (menu) => {
     setAttri(menu.key);
@@ -45,8 +44,8 @@ export const TerminalManage = () => {
         end_time: endTime
       }).then(res => {
         // 重绘chart
-        termStsList = res;
-        setOptions(getEquipOption(termStsList, attri));
+        termStsList.current = res;
+        setOptions(getEquipOption(termStsList.current, attri));
       });
     },
     [period]
@@ -56,7 +55,7 @@ export const TerminalManage = () => {
   React.useEffect(
     () => {
       // 重绘chart
-      setOptions(getEquipOption(termStsList, attri));
+      setOptions(getEquipOption(termStsList.current, attri));
     },
     [attri]
   );
