@@ -67,16 +67,12 @@
 }
 img[src="http://api0.map.bdimg.com/images/iw3.png"]
 {
-  //   content: url("../../public/message.png");
-  //   content: url("../../public/title-1.svg")
   content: "";
 }
 img[src="https://api.map.baidu.com/images/iw3.png"]
 {
-    margin-top: -692 !important;
+    margin-top: -695px !important;
     filter: alpha(opacity=70);
-  //   content: url("../../public/message.png");
-  // content: url("../../public/title-1.svg")
   box-sizing: content-box;
   border: none;
   margin: 0px;
@@ -86,5 +82,6 @@ img[src="https://api.map.baidu.com/images/iw3.png"]
   max-width: none;
   width: 690px;
   height: 786px;
-  content: url("../../public/message.png");
+  // content: url("../../public/message.png");
+  content: url("../../public/mapbg.png")
 }
