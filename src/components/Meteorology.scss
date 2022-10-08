@@ -11,13 +11,27 @@
   .detail {
     display: flex;
     height: calc(100% - 30px);
-  }
-  .weather {
-    width: calc(30% - 5px);
-    height: 100%;
-  }
-  .realtime {
-    width: calc(70% - 5px);
-    height: 100%;
+    .left {
+      width: calc(30% - 5px);
+      height: 100%;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      width: calc(70% - 5px);
+      height: 100%;
+      .menu {
+        height: 30px;
+      }
+      .realtime {
+        height: 30%;
+      }
+      .daily-param {
+        height: 30%;
+      }
+      .sun-time {
+
+      }
+    }
   }
 }

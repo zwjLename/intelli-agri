@@ -152,8 +152,8 @@ header {
   .left {
     height: 100%;
     width: 35%;
-    padding: 5px 10px 10px 15px;
-    border-top: 1px solid $main-thread;
+    padding: 10px 5px;
+    // border-top: 1px solid $main-thread;
   }
   .left-slash-holder {
     width: 30px;
@@ -168,8 +168,8 @@ header {
   .right {
     width: 35%;
     height: 100%;
-    border-top: 1px solid $main-thread;
-    padding: 5px 10px 10px 15px;
+    // border-top: 1px solid $main-thread;
+    padding: 10px 5px;
   }
   .right-main {
     display: flex;
@@ -191,13 +191,13 @@ header {
 
 
   .left-main-top {
-    height: 40%;
+    height: 100%;
     background: url("../public/bg1.svg") no-repeat;
     background-size: cover;
   }
   .left-main-bottom {
     width: 100%;
-    height: calc(60% - 10px);
+    height: calc(30% - 10px);
     background: url("../public/bg1.svg") no-repeat;
     background-size: cover;
   }
@@ -244,7 +244,6 @@ footer {
   .line {
     height: 20px;
     width: 100%;
-
     border-bottom: 1px solid $main-thread;
   }
   .left {

@@ -54,3 +54,12 @@ export const getTerminalHis = async payload => {
         params: payload,
     });
 }
+
+// 查询一段时间内（按天）所有气象参数统计
+export const getDailyParam = async payload => {
+    return await axios({
+        url: '/api/opt/dailyParamByTerm',
+        method: 'GET',
+        params: payload,
+    });
+}

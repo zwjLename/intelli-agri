@@ -1,10 +1,10 @@
 import React from "react";
 import { ChartComponent } from "./ChartComponent";
-import { ChartType, TypeToOption, Time, MAttr, temids } from "./const.ts";
+import { ChartType, TypeToOption, Time, TAttr, temids } from "./const.ts";
 import "./style.scss";
 import { TimeComponent } from "./TimeComponent";
 import "./TerminalManage.scss";
-import { MeteorologyMenu } from "./MeteorologyMenu";
+import { TerminalMenu } from "./TerminalMenu";
 import { getTerminalStatus, getTerminalHis } from "../api/api";
 import { getTimePeriod, getEquipOption } from "../utils";
 
@@ -13,7 +13,7 @@ export const TerminalManage = () => {
   const [onlineNum, setOnlineNum] = React.useState(0); // 终端在线个数
   const [offlineNum, setOfflineNum] = React.useState(0); // 终端离线个数
   const [period, setPeriod] = React.useState(Time.today); // 时间
-  const [attri, setAttri] = React.useState(MAttr.data + ""); // 菜单
+  const [attri, setAttri] = React.useState(TAttr.data + ""); // 菜单
   const defaultOptions = TypeToOption[ChartType.Equip];
   const [options, setOptions] = React.useState(defaultOptions);
   const termStsList = React.useRef([]); // 暂存所有的终端数据
@@ -67,7 +67,7 @@ export const TerminalManage = () => {
       </div>
       <div className="content">
         <div className="chart-part">
-          <MeteorologyMenu activeKey={attri} onChange={onMenuChange}/>
+          <TerminalMenu activeKey={attri} onChange={onMenuChange}/>
           <div className="condition-realtime-echart">
             <ChartComponent
               type={ChartType.RealTime}

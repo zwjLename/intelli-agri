@@ -37,15 +37,15 @@ export const AttrParam = {
   [Attr.wind]: "windspeed",
 };
 
-export enum MAttr {
+export enum TAttr {
   data,
   battery,
   rate
 }
-export const MAttrItem = {
-  [MAttr.data]: "数据量",
-  [MAttr.battery]: "电量",
-  [MAttr.rate]: "省台率"
+export const TAttrItem = {
+  [TAttr.data]: "数据量",
+  [TAttr.battery]: "电量",
+  [TAttr.rate]: "省台率"
 };
 
 
@@ -351,15 +351,20 @@ export const StatisticsOption = {
     bottom: "6%",
     containLabel: true,
   },
-  xAxis: [
-    {
-      type: "category",
-      data: data.categoryData,
-      splitLine: { show: false },
-      min: "dataMin",
-      max: "dataMax",
-    },
-  ],
+  xAxis:{
+    type: "category",
+    data: data.categoryData, // 修改数据
+    splitLine: { show: false },
+    min: "dataMin",
+    max: "dataMax",
+    axisLabel: {
+      formatter: (value, index) => {
+        // 横坐标折行显示
+        const vAttr = value.split(" ");
+        return vAttr[0].replaceAll("-", "") + "\n" + vAttr[1];
+      }
+    }
+  },
   yAxis: {
     type: "value",
     scale: true,
@@ -377,13 +382,13 @@ export const StatisticsOption = {
       name: "数据",
       type: "custom",
       renderItem: renderItem,
-      dimensions: ["", "lowest", "middle", "highest"],
+      dimensions: ["", "最高", "平均", "最低"],
       encode: {
         x: 0,
         y: [1, 2, 3],
         tooltip: [1, 2, 3],
       },
-      data: data.values,
+      data: data.values, // 修改数据
     },
   ],
 };

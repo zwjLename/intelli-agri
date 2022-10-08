@@ -3,8 +3,8 @@ import { Time,
   TypeToOption,
   ChartType,
   EquipmentKey,
-  MAttr,
-  MAttrItem
+  TAttr,
+  TAttrItem
 } from "../components/const.ts";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
@@ -109,20 +109,38 @@ export const getEquipOption = (data, type) => {
   data.forEach((item, _) => {
     xData.push(item.termid);
     switch (type * 1) {
-      case MAttr.data:
+      case TAttr.data:
         yData.push(item.recvsum); // 上报数据量
         break;
-      case MAttr.battery:
+      case TAttr.battery:
         yData.push(item.voltavg); // 电量
         break;
-      case MAttr.rate:
+      case TAttr.rate:
         rate = Number(item.platsum / item.recvsum * 100).toFixed(2);
         yData.push(rate); // 省台率
         break;
     }
   });
-  option.series[0].name = MAttrItem[type];
+  option.series[0].name = TAttrItem[type];
   option.xAxis.data = xData;
+  option.series[0].data = yData;
+
+  return {...option};
+};
+
+// 获取气象参数曲线图的option
+export const getDailyParamOption = (data, name) => {
+  if (!data.length) return;
+  const option = TypeToOption[ChartType.Statis];
+
+  let xData = [];
+  let yData = [];
+  data.forEach((item, index) => {
+    xData.push(moment(item.time).format(FORMAT_STR));
+    yData.push([index, item.max, item.mean, item.min]);
+  });
+  option.xAxis.data = xData;
+  option.series[0].name = name;
   option.series[0].data = yData;
 
   return {...option};

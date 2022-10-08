@@ -1,16 +1,15 @@
 import React from "react";
 import { ChartComponent } from "./ChartComponent";
-import { Attr, AttrItem, TypeToOption, ChartType, AttrParam } from "./const.ts";
+import { TypeToOption, ChartType, AttrParam, AttrItem } from "./const.ts";
 import { connect } from "react-redux";
 import { hisAggrQuery } from "../api/api";
 import { getTimePeriod, getRealTimeOption } from "../utils";
-import { Menu } from "antd";
 
 const RealTimeUI = ({
   time,
-  mapData
+  mapData,
+  attri
 }) => {
-  const [attri, setAttri] = React.useState(Attr.warm + "");
   const defaultOptions = TypeToOption[ChartType.RealTime];
   const [options, setOptions] = React.useState(defaultOptions);
 
@@ -19,9 +18,7 @@ const RealTimeUI = ({
       // 监听time、menu以及map的变化
       const {startTime, endTime} = getTimePeriod(time);
       hisAggrQuery({
-        // cell_ids: mapData.cellid + '',
         term_id: `${mapData.termid}`,
-        // snp_types: AttrParam[attri],
         type: AttrParam[attri],
         start_time: startTime,
         end_time: endTime
@@ -34,20 +31,11 @@ const RealTimeUI = ({
         }
       });
     },
-    [attri, time, mapData.cellid]
+    [attri, time, mapData.termid]
   );
 
   return (
     <div className="content-component realTime">
-      <Menu mode="horizontal"
-        defaultSelectedKeys={[attri]}
-        onSelect={menu => setAttri(menu.key)}>
-        {
-          Object.keys(AttrItem).map((item, _) => (
-            <Menu.Item key={item}>{AttrItem[item]}</Menu.Item>
-          ))
-        }
-      </Menu>
       <ChartComponent
         type={ChartType.RealTime}
         style={{ marginTop: "10px" }}
@@ -60,7 +48,8 @@ const RealTimeUI = ({
 export const RealTime = connect(
   state => ({
     time: state.time,
-    mapData: state.mapData
+    mapData: state.mapData,
+    attri: state.menu
   }),
   {}
 )(RealTimeUI);

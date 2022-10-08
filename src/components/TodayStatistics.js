@@ -6,6 +6,7 @@ import { ChartType, TypeToOption } from "./const.ts";
 export const TodayStatistics = () => {
   const defaultOptions = TypeToOption[ChartType.Statis];
   const [options, setOptions] = React.useState(defaultOptions);
+
   return (
     <div className="content-component history ">
       <div className="flex">

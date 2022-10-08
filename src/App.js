@@ -6,7 +6,6 @@ import hightLight from "./imgs/light.png";
 import target from "./imgs/target.png";
 import moment from "moment";
 import { Meteorology } from "./components/Meteorology";
-import { FarmTime } from "./components/FarmTime";
 import { MapComponent } from "./components/MapComponent";
 import { TerminalManage } from "./components/TerminalManage";
 import { TerminalData } from "./components/TerminalData";
@@ -57,10 +56,6 @@ function App() {
                 {/* 气象走势 */}
               <Meteorology />
             </div>
-            <div className="left-main-bottom">
-              {/* 农时分析 */}
-              <FarmTime />
-            </div>
           </div>
         </div>
         <div className="left-slash-holder"></div>
@@ -73,11 +68,9 @@ function App() {
         <div className="right">
           <div className="flex-column main mt10">
             <div className="main-top ">
-            {/* <ConditionRealTime /> */}
               <TerminalManage />
             </div>
             <div className="main-part-bottom">
-              {/* <TodayStatistics /> */}
               <TerminalData />
             </div>
           </div>

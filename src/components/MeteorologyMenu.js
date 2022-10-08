@@ -1,21 +1,28 @@
-import "./MeteorologyMenu.scss"
 import { Menu } from "antd";
-import { MAttrItem } from "./const.ts";
+import { connect } from "react-redux";
+import { changeMenu } from "../store/actions/menu";
+import { AttrItem } from "./const.ts";
 
 // 气象菜单
-export const MeteorologyMenu = ({
+const MeteorologyMenuUI = ({
   activeKey,
-  onChange
+  changeMenu
 }) => {
   return (
-    <div className="meteorology-menu">
-      <Menu mode="horizontal" defaultSelectedKeys={[activeKey]} onSelect={onChange}>
+    <>
+      <Menu mode="horizontal"
+        defaultSelectedKeys={[activeKey + ""]}
+        onSelect={menu => changeMenu(menu.key)}>
         {
-          Object.keys(MAttrItem).map((item, _) => (
-            <Menu.Item key={item}>{MAttrItem[item]}</Menu.Item>
+          Object.keys(AttrItem).map((item, _) => (
+            <Menu.Item key={item}>{AttrItem[item]}</Menu.Item>
           ))
         }
       </Menu>
-    </div>
+    </>
   );
 };
+export const MeteorologyMenu = connect(
+  state => ({activeKey: state.menu}),
+  {changeMenu}
+)(MeteorologyMenuUI);
