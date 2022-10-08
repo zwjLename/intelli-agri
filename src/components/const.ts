@@ -396,7 +396,7 @@ export const StatisticsOption = {
       formatter: (value, index) => {
         // 横坐标折行显示
         const vAttr = value.split(" ");
-        return vAttr[0].replaceAll("-", "") + "\n" + vAttr[1];
+        return vAttr[0];
       }
     }
   },
