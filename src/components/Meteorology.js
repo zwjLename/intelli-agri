@@ -4,6 +4,7 @@ import { changeTime } from "../store/actions/time";
 import { MeteorologyMenu } from "./MeteorologyMenu";
 import { RealTime } from "./RealTime";
 import { DailyParam } from "./DailyParam";
+import { SunTime } from "./SunTime";
 
 import "./Meteorology.scss";
 
@@ -28,7 +29,7 @@ const MeteorologyUI = ({
           <div className="menu"><MeteorologyMenu /></div>
           <div className="realtime"><RealTime /></div>
           <div className="daily-param"><DailyParam /></div>
-          <div className="sun-time"></div>
+          <div className="sun-time"><SunTime /></div>
         </div>
       </div>
     </div>

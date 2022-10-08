@@ -86,6 +86,7 @@ export enum ChartType {
   History = "history", // 历史
   Equip = "equip", // 今日设备
   Statis = "statistics", //今日数据统计
+  SunTime = "suntime", //日出日落
 }
 const axisCommonOptions = {
   axisLine: {
@@ -209,6 +210,40 @@ export const HistoryOption = {
   ],
 };
 export const EquipOption = {
+  tooltip: {
+    trigger: "axis",
+  },
+  grid: {
+    top: "2%",
+    left: "3%",
+    right: "4%",
+    bottom: "6%",
+    containLabel: true,
+  },
+  xAxis: {
+    type: "category",
+    ...axisCommonOptions,
+    data: [], // data
+  },
+  yAxis: {
+    type: "value",
+    ...axisCommonOptions,
+    splitLine: {
+      show: true,
+      lineStyle: {
+        type: "dashed",
+        color: "#6e7079",
+      },
+    },
+  },
+  series: [
+    {
+      type: "bar",
+      data: [], // data
+    },
+  ],
+};
+export const SunTimeOption = {
   tooltip: {
     trigger: "axis",
   },
@@ -397,6 +432,7 @@ export const TypeToOption = {
   [ChartType.History]: HistoryOption,
   [ChartType.Equip]: EquipOption,
   [ChartType.Statis]: StatisticsOption,
+  [ChartType.SunTime]: SunTimeOption,
 };
 
 export const cell_ids =

@@ -145,3 +145,78 @@ export const getDailyParamOption = (data, name) => {
 
   return {...option};
 };
+
+const getDailySunTimeData = (sunTimeData, date) => {
+  let ret = {};
+  sunTimeData.filter(item => {
+    if (item.date === date) {
+      ret = item;
+    }
+  });
+  return ret;
+};
+
+// 获取日出日落图的option
+export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
+  if (!illuIntgeData.length) return;
+  const option = TypeToOption[ChartType.SunTime];
+
+  let xData = [];
+  let ySunRise = [];
+  let ySunSet = [];
+  let yDailyTotalRad = [];
+  let yDailyAvgRadDate = [];
+  let yPeakHours = [];
+  let yDli = [];
+  // illuIntgeData比sunTimeData长度要长
+  illuIntgeData.forEach((item, index) => {
+    let date = item.time.split("T")[0];
+    xData.push(date);
+
+    let dailySunTime = getDailySunTimeData(sunTimeData, date);
+    // 日出
+    ySunRise.push(moment(dailySunTime.date + "T" + dailySunTime.rise).valueOf() / 1000 / 60 / 60);
+    // 日落
+    ySunSet.push(moment(dailySunTime.date + "T" + dailySunTime.set).valueOf() / 1000 / 60 / 60);
+    // 日总辐射
+    yDailyTotalRad.push(item.dailyTotalRad);
+    // 日均辐射
+    yDailyAvgRadDate.push(item.dailyAvgRad);
+    // 峰值日照时间
+    yPeakHours.push(item.peakHours);
+    // 光积分DLI
+    yDli.push(item.dli);
+  });
+
+  option.xAxis.data = xData;
+
+  option.series[0] = {
+    name: "日出",
+    data: ySunRise
+  };
+  option.series[1] = {
+    name: "日落",
+    data: ySunSet
+  };
+  option.series[2] = {
+    name: "日总辐射",
+    data: yDailyTotalRad
+  };
+  option.series[3] = {
+    name: "日均辐射",
+    data: yDailyAvgRadDate
+  };
+  option.series[4] = {
+    name: "峰值日照时间",
+    data: yPeakHours
+  };
+  option.series[5] = {
+    name: "光积分DLI",
+    data: yDli
+  };
+  option.series.forEach((item, _) => {
+    item.type = "bar";
+  });
+
+  return {...option};
+};

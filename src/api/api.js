@@ -63,3 +63,21 @@ export const getDailyParam = async payload => {
         params: payload,
     });
 }
+
+// 查询某气象站日出日落和时长
+export const getSunTime = async payload => {
+    return await axios({
+        url: '/api/opt/termSunTime',
+        method: 'GET',
+        params: payload,
+    });
+}
+
+// 查询某气象站的日总辐射、日均辐射、峰值日照时间、日光积分DLI
+export const getIlluIntgl = async payload => {
+    return await axios({
+        url: '/api/opt/termIlluIntgl',
+        method: 'GET',
+        params: payload,
+    });
+}
