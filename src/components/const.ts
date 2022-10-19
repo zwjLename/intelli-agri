@@ -1,3 +1,4 @@
+import moment from "moment";
 export enum WeatherKey {
   rainfall,
   sunshineTime,
@@ -40,24 +41,25 @@ export const AttrParam = {
 export enum TAttr {
   data,
   battery,
-  rate
+  rate,
 }
 export const TAttrItem = {
   [TAttr.data]: "数据量",
   [TAttr.battery]: "电量",
-  [TAttr.rate]: "省台率"
+  [TAttr.rate]: "省台率",
 };
 
-
 export enum Time {
-  today,
+  // today,
+  yesterday,
   oneWeek,
   oneMonth,
   threeMonth,
   // oneYear,
 }
 export const TimeItem = {
-  [Time.today]: "当天",
+  // [Time.today]: "当天",
+  [Time.yesterday]: "昨天",
   [Time.oneWeek]: "近7天",
   [Time.oneMonth]: "近1月",
   [Time.threeMonth]: "近3月",
@@ -118,8 +120,8 @@ export const RealTimeOption = {
         // 横坐标折行显示
         const vAttr = value.split(" ");
         return vAttr[0].replaceAll("-", "") + "\n" + vAttr[1];
-      }
-    }
+      },
+    },
   },
   yAxis: {
     type: "value",
@@ -259,17 +261,77 @@ export const SunTimeOption = {
     ...axisCommonOptions,
     data: [], // data
   },
-  yAxis: {
-    type: "value",
-    ...axisCommonOptions,
-    splitLine: {
-      show: true,
-      lineStyle: {
-        type: "dashed",
-        color: "#6e7079",
+  yAxis: [
+    {
+      type: "value",
+      name: "时间",
+      position: "left",
+      ...axisCommonOptions,
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
       },
+      // axisLabel: {
+      //   formatter: (value) => {
+      //     return `${moment(value).format('MM-DD HH:mm:ss').toString()}`
+      //   }
+      // }
     },
-  },
+    {
+      type: "value",
+      ...axisCommonOptions,
+      position: "right",
+      name: "w/m2/d",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
+      },
+      offset: 20,
+      // axisLabel: {
+      //   formatter: '{value} w/m2/d'
+      // }
+    },
+    {
+      type: "value",
+      ...axisCommonOptions,
+      position: "right",
+      name: "w/m2/h",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
+      },
+      offset: 60,
+      // axisLabel: {
+      //   formatter: '{value} w/m2/h'
+      // }
+    },
+    {
+      type: "value",
+      ...axisCommonOptions,
+      position: "right",
+      name: "mol/m2/d",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
+      },
+      offset: 100,
+      // axisLabel: {
+      //   formatter: '{value} mol/m2/d'
+      // }
+    },
+  ],
   series: [
     {
       type: "bar",
@@ -293,13 +355,6 @@ function splitData(rawData) {
   };
 }
 function renderItem(params, api) {
-  console.log(
-    api.value(0),
-    api.value(1),
-    api.value(2),
-    api.value(3),
-    api.value(4)
-  );
   var xValue = api.value(0);
   var highPoint = api.coord([xValue, api.value(1)]);
   var curPoint = api.coord([xValue, api.value(2)]);
@@ -386,7 +441,7 @@ export const StatisticsOption = {
     bottom: "6%",
     containLabel: true,
   },
-  xAxis:{
+  xAxis: {
     type: "category",
     data: data.categoryData, // 修改数据
     splitLine: { show: false },
@@ -397,8 +452,8 @@ export const StatisticsOption = {
         // 横坐标折行显示
         const vAttr = value.split(" ");
         return vAttr[0];
-      }
-    }
+      },
+    },
   },
   yAxis: {
     type: "value",

@@ -12,7 +12,7 @@
     display: flex;
     height: calc(100% - 30px);
     .left {
-      width: calc(30% - 5px);
+      width: calc(20% - 5px);
       height: 100%;
     }
     .right {
@@ -25,6 +25,7 @@
       }
       .realtime {
         height: 30%;
+        padding: 0px;
       }
       .daily-param {
         height: 30%;

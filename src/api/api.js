@@ -60,7 +60,12 @@ export const getDailyParam = async payload => {
     return await axios({
         url: '/api/opt/dailyParamByTerm',
         method: 'GET',
-        params: payload,
+        // params: payload,
+        // todo
+        params: {
+            ...payload,
+            start_time: "2022-10-09 00:00:00"
+        }
     });
 }
 

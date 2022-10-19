@@ -4,7 +4,8 @@ import { Time } from "../../components/const.ts";
 import { changeTime } from "../actions/time";
 
 // 初始化state
-const initState = Time.today;
+// const initState = Time.today;
+const initState = Time.yesterday;
 // export default function reducer(state = initState, action) {
 //   const {type, data} = action;
 //   switch (type) {

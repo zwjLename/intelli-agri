@@ -1,11 +1,11 @@
 import * as echarts from "echarts";
 import { debounce } from "lodash";
-import React, { useEffect } from "react";
+import React from "react";
 import { addListener, removeListener } from "resize-detector";
 
-export const ChartComponent = ({ type, style, options = {} }) => {
+export const ChartComponent = ({ type, style, options = {}, mouseover }) => {
   const chartRef = React.useRef(null);
-  const chartInstance = React.useReducer(null);
+  const chartInstance = React.useRef(null);
   // 窗口大小变化，调整画布大小
   const resize = () => {
     if (chartInstance.current) {
@@ -24,6 +24,18 @@ export const ChartComponent = ({ type, style, options = {} }) => {
     },
     [options, chartInstance]
   );
+
+React.useEffect(
+  () => {
+    if (!chartInstance.current) {
+      return;
+    }
+    if (mouseover) {
+      console.log('%c [ mouseover ]-34', 'font-size:13px; background:pink; color:#bf2c9f;', mouseover)
+      chartInstance.current?.on('mouseover', mouseover)
+    }
+  }
+)
 
   React.useEffect(
     () => {

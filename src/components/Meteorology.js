@@ -26,7 +26,8 @@ const MeteorologyUI = ({
           />
         </div>
         <div className="right">
-          <div className="menu"><MeteorologyMenu /></div>
+          
+          <div className="menu"><MeteorologyMenu /></div> 
           <div className="realtime"><RealTime /></div>
           <div className="daily-param"><DailyParam /></div>
           <div className="sun-time"><SunTime /></div>

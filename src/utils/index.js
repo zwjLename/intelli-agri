@@ -21,6 +21,9 @@ export const getTimePeriod = (time) => {
     case Time.today:
       ret.startTime = m.format("YYYY-MM-DD 00:00:00");
       break;
+    case Time.yesterday:
+      ret.startTime = m.subtract(1, 'days').format(FORMAT_STR);
+      break;
     case Time.oneWeek:
       ret.startTime = m.subtract(7, 'days').format(FORMAT_STR);
       break;
@@ -107,8 +110,9 @@ export const getEquipOption = (data, type) => {
   let yData = [];
   let rate = 0;
   data.forEach((item, _) => {
-    xData.push(item.termid);
-    switch (type * 1) {
+    // xData.push(item.termid);
+    xData.push(item.name)
+    switch (Number(type)) {
       case TAttr.data:
         yData.push(item.recvsum); // 上报数据量
         break;
@@ -118,6 +122,8 @@ export const getEquipOption = (data, type) => {
       case TAttr.rate:
         rate = Number(item.platsum / item.recvsum * 100).toFixed(2);
         yData.push(rate); // 省台率
+        break;
+      default:
         break;
     }
   });
@@ -147,13 +153,14 @@ export const getDailyParamOption = (data, name) => {
 };
 
 const getDailySunTimeData = (sunTimeData, date) => {
-  let ret = {};
-  sunTimeData.filter(item => {
-    if (item.date === date) {
-      ret = item;
-    }
-  });
-  return ret;
+  // let ret = {};
+  // sunTimeData.filter(item => {
+  //   if (item.date === date) {
+  //     ret = item;
+  //   }
+  // });
+  // return ret;
+  return sunTimeData.find(item => item.date === date);
 };
 
 // 获取日出日落图的option
@@ -173,11 +180,18 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
     let date = item.time.split("T")[0];
     xData.push(date);
 
-    let dailySunTime = getDailySunTimeData(sunTimeData, date);
-    // 日出
-    ySunRise.push(moment(dailySunTime.date + "T" + dailySunTime.rise).valueOf() / 1000 / 60 / 60);
-    // 日落
-    ySunSet.push(moment(dailySunTime.date + "T" + dailySunTime.set).valueOf() / 1000 / 60 / 60);
+    const dailySunTime = getDailySunTimeData(sunTimeData, date);
+   
+    const ysunRiseData = moment(dailySunTime?.date + "T" + dailySunTime?.rise);
+    const ysunSetData = moment(dailySunTime?.date + "T" + dailySunTime?.set);
+
+    // 日出（小时）
+    ySunRise.push(ysunRiseData.isValid() ? ysunRiseData.valueOf() : 0);
+    // ySunRise.push(moment(dailySunTime.date + "T" + dailySunTime.rise).valueOf() / 1000 / 60 / 60);
+    
+    // 日落（小时）
+    ySunSet.push(ysunSetData.isValid() ? ysunSetData.valueOf() : 0);
+    // ySunSet.push(moment(dailySunTime.date + "T" + dailySunTime.set).valueOf() / 1000 / 60 / 60);
     // 日总辐射
     yDailyTotalRad.push(item.dailyTotalRad);
     // 日均辐射
@@ -186,35 +200,46 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
     yPeakHours.push(item.peakHours);
     // 光积分DLI
     yDli.push(item.dli);
+    
   });
 
   option.xAxis.data = xData;
 
   option.series[0] = {
     name: "日出",
-    data: ySunRise
+    data: ySunRise,
+    yAxisIndex: 0,
   };
+  console.log('%c [ ySunRise ]-201', 'font-size:13px; background:pink; color:#bf2c9f;', ySunRise)
   option.series[1] = {
     name: "日落",
-    data: ySunSet
+    data: ySunSet,
+    yAxisIndex: 0,
   };
+  console.log('%c [ ySunSet ]-207', 'font-size:13px; background:pink; color:#bf2c9f;', ySunSet)
   option.series[2] = {
     name: "日总辐射",
-    data: yDailyTotalRad
+    data: yDailyTotalRad,
+    yAxisIndex: 1,
   };
   option.series[3] = {
     name: "日均辐射",
-    data: yDailyAvgRadDate
+    data: yDailyAvgRadDate,
+    yAxisIndex:2
   };
   option.series[4] = {
     name: "峰值日照时间",
-    data: yPeakHours
+    data: yPeakHours,
+    yAxisIndex: 0,
   };
   option.series[5] = {
     name: "光积分DLI",
-    data: yDli
+    data: yDli,
+    yAxisIndex: 3
   };
+  console.log('%c [ yDli ]-201', 'font-size:13px; background:pink; color:#bf2c9f;', yDli)
   option.series.forEach((item, _) => {
+
     item.type = "bar";
   });
 

@@ -23,14 +23,15 @@ function App() {
         </div>
         <div className="content flex-column">
           <div className="title">
+           <div className="title-temp"> 江宁农业气象大数据可视化</div>
+            {/* <div className="title-word"></div>
             <div className="title-word"></div>
             <div className="title-word"></div>
             <div className="title-word"></div>
             <div className="title-word"></div>
             <div className="title-word"></div>
             <div className="title-word"></div>
-            <div className="title-word"></div>
-            <div className="title-word"></div>
+            <div className="title-word"></div> */}
           </div>
           <div className="subtitle">
             <img src={target} className="ml10" />
