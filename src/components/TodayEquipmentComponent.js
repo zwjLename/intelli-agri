@@ -26,32 +26,13 @@ const ListComponent = ({
   ));
 };
 
-const TodayEquipmentComponentUI = ({
+export const TodayEquipmentComponent = ({
   termid,
   time,
   activeKey,
   onChange = () => {}
 }) => {
   const [displayData, setDisplayData] = React.useState({});
-  // const ListComponent = React.useMemo(
-  //   () => {
-  //     const keys = Object.keys(EquipmentItem);
-  //     return keys.map((ele, ind) => (
-  //       <div
-  //         key={`todayEquipment-${ind}`}
-  //         className={`equipment-btn pointer ${Number(ele) === Number(activeKey)
-  //           ? "btn-highlight"
-  //           : ""}`}
-  //         onClick={() => {
-  //           onChange(ele);
-  //         }}
-  //       >
-  //         {EquipmentItem[ele]}：{displayData[ele]}
-  //       </div>
-  //     ));
-  //   },
-  //   [activeKey, onChange, displayData]
-  // );
 
   React.useEffect(
     () => {
@@ -81,7 +62,3 @@ const TodayEquipmentComponentUI = ({
   );
 };
 
-export const TodayEquipmentComponent = connect(
-  state => ({termid: state.mapData.termid}),
-  {}
-)(TodayEquipmentComponentUI);

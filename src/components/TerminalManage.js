@@ -50,32 +50,24 @@ const TerminalManageCom = ({
   }, []);
 
   // 时间组件改变时
-  React.useEffect(
-    () => {
-      const { startTime, endTime } = getTimePeriod(terminal.time); // period
-      // 下发请求
-      getTerminalHis({
-        term_lst: temids,
-        start_time: startTime,
-        end_time: endTime,
-      }).then((res) => {
-        const obj = {};
-        res.forEach((ele) => {
-          obj[ele.name] = ele.termid;
-        });
-        terminalIdToName(obj);
-        // 重绘chart
-        termStsList.current = res;
-        setOptions(getEquipOption(termStsList.current, attri));
-        console.log(
-          "%c [ getEquipOption(res, attri) ]-65",
-          "font-size:13px; background:pink; color:#bf2c9f;",
-          getEquipOption(res, attri)
-        );
+  React.useEffect(() => {
+    const { startTime, endTime } = getTimePeriod(terminal.time); // period
+    // 下发请求
+    getTerminalHis({
+      term_lst: temids,
+      start_time: startTime,
+      end_time: endTime,
+    }).then((res) => {
+      const obj = {};
+      res.forEach((ele) => {
+        obj[ele.name] = ele.termid;
       });
-    },
-    [terminal.time] // period
-  );
+      terminalIdToName(obj);
+      // 重绘chart
+      termStsList.current = res;
+      setOptions(getEquipOption(termStsList.current, attri));
+    });
+  }, [attri, terminal.time, terminalIdToName]);
 
   // 菜单组件改变时
   React.useEffect(() => {
@@ -83,6 +75,21 @@ const TerminalManageCom = ({
     setOptions(getEquipOption(termStsList.current, attri));
   }, [attri]);
 
+  const renderChart = React.useMemo(() => {
+    return (
+      <ChartComponent
+        type={ChartType.RealTime}
+        style={{ marginTop: "10px" }}
+        options={options}
+        mouseover={(item) => {
+          const { name } = item;
+          const terminalId = terminal.idToName[name];
+          selectTerminalId(terminalId);
+        }}
+        mouseout={() => selectTerminalId(0)}
+      />
+    );
+  }, [options, selectTerminalId, terminal.idToName]);
   return (
     <div className="terminal-manage">
       <div className="content-title">
@@ -91,29 +98,12 @@ const TerminalManageCom = ({
       <div className="content">
         <div className="chart-part">
           <TerminalMenu activeKey={attri} onChange={onMenuChange} />
-          <div className="condition-realtime-echart">
-            <ChartComponent
-              type={ChartType.RealTime}
-              style={{ marginTop: "10px" }}
-              options={options}
-              mouseover={(item) => {
-                const { name } = item;
-                const terminalId = terminal.idToName[name];
-                console.log(
-                  "%c [ terminalId ]-94",
-                  "font-size:13px; background:green; color:#bf2c9f;",
-                  terminalId
-                );
-                selectTerminalId(terminalId)
-              }}
-            />
-          </div>
+          <div className="condition-realtime-echart">{renderChart}</div>
         </div>
         <div className="time-part">
           <TimeComponent
             activeKey={terminal.time}
             onChange={(e) => {
-              // setPeriod(e);
               changeTime(e);
             }}
           />

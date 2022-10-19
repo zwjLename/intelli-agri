@@ -9,9 +9,11 @@ import { Meteorology } from "./components/Meteorology";
 import { MapComponent } from "./components/MapComponent";
 import { TerminalManage } from "./components/TerminalManage";
 import { TerminalData } from "./components/TerminalData";
+import { SunTime } from "./components/SunTime";
+import { connect } from "react-redux";
 
 const WEEK = ['星期日','星期一', '星期二', '星期三', '星期四','星期五','星期六']
-function App() {
+function App({terminal}) {
   return (
     <>
       <header>
@@ -71,8 +73,10 @@ function App() {
             <div className="main-top ">
               <TerminalManage />
             </div>
+            
+              
             <div className="main-part-bottom">
-              <TerminalData />
+              {terminal.terminalId ? <TerminalData /> :  <SunTime />}
             </div>
           </div>
         </div>
@@ -94,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect((state) => ({ terminal: state.terminal }))(App);

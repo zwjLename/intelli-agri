@@ -240,6 +240,7 @@ header {
   height: calc(50% - 10px);
   background: url("../public/bg1.svg") no-repeat;
   background-size: cover;
+  z-index:9
 }
 footer {
   height: 8%;

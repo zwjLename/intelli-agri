@@ -3,7 +3,7 @@ import { debounce } from "lodash";
 import React from "react";
 import { addListener, removeListener } from "resize-detector";
 
-export const ChartComponent = ({ type, style, options = {}, mouseover }) => {
+export const ChartComponent = ({ type, style, options = {}, mouseover ,mouseout}) => {
   const chartRef = React.useRef(null);
   const chartInstance = React.useRef(null);
   // 窗口大小变化，调整画布大小
@@ -31,8 +31,10 @@ React.useEffect(
       return;
     }
     if (mouseover) {
-      console.log('%c [ mouseover ]-34', 'font-size:13px; background:pink; color:#bf2c9f;', mouseover)
       chartInstance.current?.on('mouseover', mouseover)
+    }
+    if (mouseout) {
+      chartInstance.current?.on('mouseout', mouseout)
     }
   }
 )

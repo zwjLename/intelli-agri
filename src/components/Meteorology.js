@@ -30,7 +30,7 @@ const MeteorologyUI = ({
           <div className="menu"><MeteorologyMenu /></div> 
           <div className="realtime"><RealTime /></div>
           <div className="daily-param"><DailyParam /></div>
-          <div className="sun-time"><SunTime /></div>
+          {/* <div className="sun-time"><SunTime /></div> */}
         </div>
       </div>
     </div>
