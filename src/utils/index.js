@@ -4,7 +4,9 @@ import { Time,
   ChartType,
   EquipmentKey,
   TAttr,
-  TAttrItem
+  TAttrItem,
+  RAttr,
+  RAttrItem,
 } from "../components/const.ts";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
@@ -181,14 +183,14 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
     xData.push(date);
 
     const dailySunTime = getDailySunTimeData(sunTimeData, date);
-   
+
     const ysunRiseData = moment(dailySunTime?.date + "T" + dailySunTime?.rise);
     const ysunSetData = moment(dailySunTime?.date + "T" + dailySunTime?.set);
 
     // 日出（小时）
     ySunRise.push(ysunRiseData.isValid() ? ysunRiseData.valueOf() : 0);
     // ySunRise.push(moment(dailySunTime.date + "T" + dailySunTime.rise).valueOf() / 1000 / 60 / 60);
-    
+
     // 日落（小时）
     ySunSet.push(ysunSetData.isValid() ? ysunSetData.valueOf() : 0);
     // ySunSet.push(moment(dailySunTime.date + "T" + dailySunTime.set).valueOf() / 1000 / 60 / 60);
@@ -200,7 +202,7 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
     yPeakHours.push(item.peakHours);
     // 光积分DLI
     yDli.push(item.dli);
-    
+
   });
 
   option.xAxis.data = xData;
@@ -242,6 +244,39 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
 
     item.type = "bar";
   });
+
+  return {...option};
+};
+
+// 获取日总辐射等的柱状图option
+export const getRadiationOption = (data, type) => {
+  if (!data.length) return;
+  const option = TypeToOption[ChartType.Equip];
+
+  let xData = [];
+  let yData = [];
+  data.forEach((item, _) => {
+    xData.push(item.time.split("T")[0])
+    switch (Number(type)) {
+      case RAttr.dailyTotalRad:
+        yData.push(item.dailyTotalRad); // 日总辐射
+        break;
+      case RAttr.dailyAvgRad:
+        yData.push(item.dailyAvgRad); // 日均辐射
+        break;
+      case RAttr.peakHours:
+        yData.push(item.peakHours); // 峰值日照时间
+        break;
+      case RAttr.dli:
+        yData.push(item.dli); // 光积分DLI
+        break;
+      default:
+        break;
+    }
+  });
+  option.series[0].name = RAttrItem[type];
+  option.xAxis.data = xData;
+  option.series[0].data = yData;
 
   return {...option};
 };

@@ -49,6 +49,19 @@ export const TAttrItem = {
   [TAttr.rate]: "省台率",
 };
 
+export enum RAttr {
+  dailyTotalRad,
+  dailyAvgRad,
+  peakHours,
+  dli
+}
+export const RAttrItem = {
+  [RAttr.dailyTotalRad]: "日总辐射",
+  [RAttr.dailyAvgRad]: "日均辐射",
+  [RAttr.peakHours]: "峰值日照时间",
+  [RAttr.dli]: "光积分DLI"
+};
+
 export enum Time {
   // today,
   yesterday,

@@ -73,8 +73,8 @@ function App({terminal}) {
             <div className="main-top ">
               <TerminalManage />
             </div>
-            
-              
+
+
             <div className="main-part-bottom">
               {terminal.terminalId ? <TerminalData /> :  <SunTime />}
             </div>
