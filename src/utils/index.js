@@ -8,6 +8,7 @@ import { Time,
   RAttr,
   RAttrItem,
 } from "../components/const.ts";
+import lodash from "lodash";
 
 const FORMAT_STR = "YYYY-MM-DD HH:mm:ss";
 
@@ -106,7 +107,7 @@ export const convertSecToMin = (sec) => {
 // 获取终端管理-柱状图的option
 export const getEquipOption = (data, type) => {
   if (!data.length) return;
-  const option = TypeToOption[ChartType.Equip];
+  const option = lodash.cloneDeep(TypeToOption[ChartType.Equip]);
 
   let xData = [];
   let yData = [];
@@ -251,7 +252,7 @@ export const getSunTimeOption = (sunTimeData, illuIntgeData) => {
 // 获取日总辐射等的柱状图option
 export const getRadiationOption = (data, type) => {
   if (!data.length) return;
-  const option = TypeToOption[ChartType.Equip];
+  const option = lodash.cloneDeep(TypeToOption[ChartType.Equip]);
 
   let xData = [];
   let yData = [];
