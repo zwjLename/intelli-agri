@@ -1,4 +1,6 @@
 import moment from "moment";
+import ReactDOMServer from "react-dom/server";
+import { isNumber } from "lodash"
 export enum WeatherKey {
   rainfall,
   sunshineTime,
@@ -50,16 +52,18 @@ export const TAttrItem = {
 };
 
 export enum RAttr {
+  sunset,
   dailyTotalRad,
   dailyAvgRad,
   peakHours,
-  dli
+  dli,
 }
 export const RAttrItem = {
+  [RAttr.sunset]: "日出日落时间",
   [RAttr.dailyTotalRad]: "日总辐射",
   [RAttr.dailyAvgRad]: "日均辐射",
   [RAttr.peakHours]: "峰值日照时间",
-  [RAttr.dli]: "光积分DLI"
+  [RAttr.dli]: "光积分DLI",
 };
 
 export enum Time {
@@ -261,6 +265,40 @@ export const EquipOption = {
 export const SunTimeOption = {
   tooltip: {
     trigger: "axis",
+    formatter: (value) => {
+      const [rise, sunset] = value;
+      const { axisValue } = rise;
+      const com = (
+        <div>
+          <p>{axisValue}</p>
+          <div>
+            <span
+              style={{
+                display: "inline-block",
+                marginRight: "4px",
+                borderRadius: "10px",
+                width: "10px",
+                height: "10px",
+                background: `${rise.color}`,
+              }}
+            /><span>{rise.seriesName}: {moment(rise.data).isValid() ? moment(rise.data).format('YYYY-MM-DD HH:mm:ss') : '-'}</span>
+          </div>
+          <div>
+            <span
+              style={{
+                display: "inline-block",
+                marginRight: "4px",
+                borderRadius: "10px",
+                width: "10px",
+                height: "10px",
+                background: `${sunset.color}`,
+              }}
+            /><span>{sunset.seriesName}: {moment(sunset.data).isValid() ? moment(sunset.data).format('YYYY-MM-DD HH:mm:ss') : '-'}</span>
+          </div>
+        </div>
+      );
+      return ReactDOMServer.renderToString(com);
+    },
   },
   grid: {
     top: "2%",
@@ -274,77 +312,24 @@ export const SunTimeOption = {
     ...axisCommonOptions,
     data: [], // data
   },
-  yAxis: [
-    {
-      type: "value",
-      name: "时间",
-      position: "left",
-      ...axisCommonOptions,
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: "dashed",
-          color: "#6e7079",
-        },
+  yAxis: {
+    type: "value",
+    name: "时间",
+    position: "left",
+    ...axisCommonOptions,
+    splitLine: {
+      show: true,
+      lineStyle: {
+        type: "dashed",
+        color: "#6e7079",
       },
-      // axisLabel: {
-      //   formatter: (value) => {
-      //     return `${moment(value).format('MM-DD HH:mm:ss').toString()}`
-      //   }
-      // }
     },
-    {
-      type: "value",
-      ...axisCommonOptions,
-      position: "right",
-      name: "w/m2/d",
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: "dashed",
-          color: "#6e7079",
-        },
+    axisLabel: {
+      formatter: (value) => {
+        return `${moment(value).format("YYYY-MM-DD HH:mm:ss")}`;
       },
-      offset: 20,
-      // axisLabel: {
-      //   formatter: '{value} w/m2/d'
-      // }
     },
-    {
-      type: "value",
-      ...axisCommonOptions,
-      position: "right",
-      name: "w/m2/h",
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: "dashed",
-          color: "#6e7079",
-        },
-      },
-      offset: 60,
-      // axisLabel: {
-      //   formatter: '{value} w/m2/h'
-      // }
-    },
-    {
-      type: "value",
-      ...axisCommonOptions,
-      position: "right",
-      name: "mol/m2/d",
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: "dashed",
-          color: "#6e7079",
-        },
-      },
-      offset: 100,
-      // axisLabel: {
-      //   formatter: '{value} mol/m2/d'
-      // }
-    },
-  ],
+  },
   series: [
     {
       type: "bar",
@@ -440,6 +425,42 @@ const rawData = [
 ];
 var data = splitData(rawData);
 export const StatisticsOption = {
+  tooltip: {
+    trigger: 'itemStyle',
+    axisPointer: {
+      type: 'cross',
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: []
+  },
+  yAxis: [
+    {
+      type: 'value',
+      scale: true,
+      ...axisCommonOptions,
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
+      },
+    }
+  ]
+}
+export const StatisticsOption_Old = {
   animation: false,
   tooltip: {
     trigger: "axis",

@@ -1,0 +1,40 @@
+@import "../index.scss";
+.content-component {
+  color: #ffffff;
+  height: 100%;
+  .content {
+    padding-right: 20px;
+  }
+}
+
+.content-title {
+  height: 20px;
+  line-height: 20px;
+  margin: 10px;
+  font-weight: bold;
+  color: $content-title;
+  padding: 10px 20px 0px;
+}
+.weather {
+  li {
+    line-height: 20px;
+    height: 20px;
+    margin-bottom: 10px;
+  }
+}
+.realTime {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  // padding: 0 10px 10px 10px;
+  padding: 0px;
+}
+.history-chart-component {
+  height: calc(100% - 50px);
+}
+.condition-realtime-echart {
+  height: calc(100% - 50px);
+}
+.statistics-echart-com {
+  height: calc(100% - 50px);
+}

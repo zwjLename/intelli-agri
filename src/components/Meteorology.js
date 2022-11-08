@@ -4,7 +4,6 @@ import { changeTime } from "../store/actions/time";
 import { MeteorologyMenu } from "./MeteorologyMenu";
 import { RealTime } from "./RealTime";
 import { DailyParam } from "./DailyParam";
-import { SunTime } from "./SunTime";
 
 import "./Meteorology.scss";
 
@@ -26,11 +25,12 @@ const MeteorologyUI = ({
           />
         </div>
         <div className="right">
-          
-          <div className="menu"><MeteorologyMenu /></div> 
+          {/* 气象走势“温湿光雨风” */}
+          <div className="menu"><MeteorologyMenu /></div>
+          {/* 气象走势echarts图 */}
           <div className="realtime"><RealTime /></div>
+          {/* 每日气象统计 */}
           <div className="daily-param"><DailyParam /></div>
-          {/* <div className="sun-time"><SunTime /></div> */}
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { temids } from "../components/const.tsx";
 import { axios } from "./request";
 
 // 地图数据
@@ -64,7 +65,6 @@ export const getDailyParam = async payload => {
         // todo
         params: {
             ...payload,
-            start_time: "2022-10-09 00:00:00"
         }
     });
 }
@@ -85,4 +85,15 @@ export const getIlluIntgl = async payload => {
         method: 'GET',
         params: payload,
     });
+}
+
+// 查询在线离线的情况
+export const getOnlineAndOffline = async () => {
+    return await axios({
+        url: '/api/opt/termStaNumLst',
+        method: 'GET',
+        params: {
+            term_lst: temids
+        }
+    })
 }

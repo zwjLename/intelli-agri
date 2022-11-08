@@ -1,0 +1,27 @@
+@import "../index.scss";
+.terminal-manage {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .content-title {
+    flex: 0 0 30px;
+    padding-top: 0 !important;
+    span {
+      text-decoration: underline;
+    }
+  }
+  .content {
+    display: flex;
+    height: calc(100% - 30px)
+  }
+  .chart-part {
+    width: calc(70% - 5px);
+    height: calc(100% - 10px);
+    background-size: cover;
+  }
+  .time-part {
+    width: calc(30% - 5px);
+    height: calc(100% - 10px);
+    background-size: cover;
+  }
+}

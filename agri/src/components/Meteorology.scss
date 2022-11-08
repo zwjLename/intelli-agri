@@ -1,0 +1,35 @@
+@import "../index.scss";
+.meteorology {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  .content-title {
+    flex: 0 0 30px;
+    padding-top: 0 !important;
+  }
+  .detail {
+    display: flex;
+    height: calc(100% - 30px);
+    .left {
+      width: calc(20% - 5px);
+      height: 100%;
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      width: calc(70% - 5px);
+      height: 100%;
+      .menu {
+        height: 30px;
+      }
+      .realtime {
+        height: 50%;
+        padding: 0px;
+      }
+      .daily-param {
+        height: calc(50% - 15px);
+      }
+    }
+  }
+}

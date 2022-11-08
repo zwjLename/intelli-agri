@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { ChartComponent } from "./ChartComponent";
-import { ChartType, TypeToOption, AttrParam, AttrItem } from "./const.ts";
+import { ChartType, TypeToOption, AttrParam, AttrItem } from "./const.tsx";
 import { getDailyParam } from "../api/api";
 import { getTimePeriod, getDailyParamOption } from "../utils";
 
@@ -35,13 +35,14 @@ const DailyParamUI = ({
 
   return (
     <>
+    <div>每日气象统计：最高/平均/最低</div>
       {
         options
         ?
         <ChartComponent
           type={ChartType.Statis}
-          style={{ marginTop: "10px" }}
           options={options}
+          
         />
         :
         <div className="no-data">暂无数据</div>

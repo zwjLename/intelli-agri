@@ -1,0 +1,17 @@
+@import "../index.scss";
+.button-com {
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  color: $content-title;
+  font-weight: bold;
+  text-align: center;
+  margin-left: -5px;
+  border-bottom: 1px solid $bg;
+  &:hover {
+    border-bottom: 1px solid $content-title;
+  }
+}
+.btn-highlight {
+  border-bottom: 1px solid $content-title;
+}
