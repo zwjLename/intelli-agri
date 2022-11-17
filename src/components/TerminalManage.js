@@ -21,8 +21,6 @@ const TerminalManageCom = ({
   terminalIdToName,
   selectTerminalId,
 }) => {
-  const [onlineNum, setOnlineNum] = React.useState(0); // 终端在线个数
-  const [offlineNum, setOfflineNum] = React.useState(0); // 终端离线个数
   // const [period, setPeriod] = React.useState(Time.today); // 时间
   const [attri, setAttri] = React.useState(TAttr.data + ""); // 菜单
   const defaultOptions = TypeToOption[ChartType.Equip];
@@ -33,16 +31,7 @@ const TerminalManageCom = ({
     setAttri(menu.key);
   };
 
-  // 组件刚挂载时
-  React.useEffect(() => {
-    // 获取终端在线、离线个数
-    getTerminalStatus({
-      term_lst: temids,
-    }).then((res) => {
-      setOnlineNum(res.onnum);
-      setOfflineNum(res.offnum);
-    });
-  }, []);
+ 
 
   // 时间组件改变时
   React.useEffect(() => {
@@ -87,9 +76,7 @@ const TerminalManageCom = ({
   }, [options, selectTerminalId, terminal.idToName]);
   return (
     <div className="terminal-manage">
-      <div className="content-title">
-        终端在线：<span>{onlineNum}个</span>，离线：<span>{offlineNum}个</span>
-      </div>
+     
       <div className="content">
         <div className="chart-part">
           <TerminalMenu activeKey={attri} onChange={onMenuChange} />

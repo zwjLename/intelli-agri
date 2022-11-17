@@ -1,6 +1,6 @@
 import moment from "moment";
 import ReactDOMServer from "react-dom/server";
-import { isNumber } from "lodash"
+import { isNumber } from "lodash";
 export enum WeatherKey {
   rainfall,
   sunshineTime,
@@ -61,7 +61,7 @@ export enum RAttr {
 export const RAttrItem = {
   [RAttr.sunset]: "日出日落时间",
   [RAttr.dailyTotalRad]: "日总辐射",
-  [RAttr.dailyAvgRad]: "日均辐射",
+  [RAttr.dailyAvgRad]: "时均辐射",
   [RAttr.peakHours]: "峰值日照时间",
   [RAttr.dli]: "光积分DLI",
 };
@@ -72,7 +72,7 @@ export enum Time {
   oneWeek,
   oneMonth,
   threeMonth,
-  // oneYear,
+  halfYear,
 }
 export const TimeItem = {
   // [Time.today]: "当天",
@@ -80,7 +80,7 @@ export const TimeItem = {
   [Time.oneWeek]: "近7天",
   [Time.oneMonth]: "近1月",
   [Time.threeMonth]: "近3月",
-  // [Time.oneYear]: "近1年",
+  [Time.halfYear]: "近半年",
 };
 
 export enum EquipmentKey {
@@ -262,80 +262,92 @@ export const EquipOption = {
     },
   ],
 };
-export const SunTimeOption = {
-  tooltip: {
-    trigger: "axis",
-    formatter: (value) => {
-      const [rise, sunset] = value;
-      const { axisValue } = rise;
-      const com = (
-        <div>
-          <p>{axisValue}</p>
-          <div>
-            <span
-              style={{
-                display: "inline-block",
-                marginRight: "4px",
-                borderRadius: "10px",
-                width: "10px",
-                height: "10px",
-                background: `${rise.color}`,
-              }}
-            /><span>{rise.seriesName}: {moment(rise.data).isValid() ? moment(rise.data).format('YYYY-MM-DD HH:mm:ss') : '-'}</span>
-          </div>
-          <div>
-            <span
-              style={{
-                display: "inline-block",
-                marginRight: "4px",
-                borderRadius: "10px",
-                width: "10px",
-                height: "10px",
-                background: `${sunset.color}`,
-              }}
-            /><span>{sunset.seriesName}: {moment(sunset.data).isValid() ? moment(sunset.data).format('YYYY-MM-DD HH:mm:ss') : '-'}</span>
-          </div>
-        </div>
-      );
-      return ReactDOMServer.renderToString(com);
-    },
-  },
-  grid: {
-    top: "2%",
-    left: "3%",
-    right: "4%",
-    bottom: "6%",
-    containLabel: true,
-  },
-  xAxis: {
-    type: "category",
-    ...axisCommonOptions,
-    data: [], // data
-  },
-  yAxis: {
-    type: "value",
-    name: "时间",
-    position: "left",
-    ...axisCommonOptions,
-    splitLine: {
-      show: true,
-      lineStyle: {
-        type: "dashed",
-        color: "#6e7079",
-      },
-    },
-    axisLabel: {
+interface SunTimeData {
+  date: string;
+  rise: string;
+  rise_5min: number;
+  set: string;
+  set_5min: number;
+  suntime: number;
+}
+export const SunTimeOption = (
+  allData: Array<SunTimeData>
+) => {
+  return {
+    tooltip: {
+      trigger: "axis",
       formatter: (value) => {
-        return `${moment(value).format("YYYY-MM-DD HH:mm:ss")}`;
+        
+        const { axisValue, color } = value[0];
+        const { rise, set } = allData.find(ele => ele.date === axisValue) || {};
+        const com = (
+          <div>
+            <p>{axisValue}</p>
+            <div>
+              <span
+                style={{
+                  display: "inline-block",
+                  marginRight: "4px",
+                  borderRadius: "10px",
+                  width: "10px",
+                  height: "10px",
+                  background: `${color}`,
+                }}
+              />
+              <span>日出: {`${axisValue} ${rise}`}</span>
+            </div>
+            <div>
+              <span
+                style={{
+                  display: "inline-block",
+                  marginRight: "4px",
+                  borderRadius: "10px",
+                  width: "10px",
+                  height: "10px",
+                  background: `${color}`,
+                }}
+              />
+              <span>日落: {`${axisValue} ${set}`}</span>
+            </div>
+          </div>
+        );
+        return ReactDOMServer.renderToString(com);
       },
     },
-  },
-  series: [
-    {
-      type: "bar",
+    grid: {
+      top: "2%",
+      left: "3%",
+      right: "4%",
+      bottom: "6%",
+      containLabel: true,
+    },
+    xAxis: {
+      // type: "category",
+      // ...axisCommonOptions,
       data: [], // data
     },
-  ],
+    yAxis: {
+      type: "value",
+      name: "时间",
+      position: "left",
+      ...axisCommonOptions,
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#6e7079",
+        },
+      },
+      // axisLabel: {
+      //   formatter: (value, itemIndex) => {
+      //     const item: SunTimeData = allData[itemIndex];
+      //     const {date = new Date(), set_5min = 0} = item || {}
+      //     console.log(item)
+      //     return `${moment(date).add(set_5min, 'm').format("HH:mm:ss")}`;
+      //   },
+      // },
+    },
+  };
 };
 
 /**    今日数据统计图 */
@@ -426,28 +438,28 @@ const rawData = [
 var data = splitData(rawData);
 export const StatisticsOption = {
   tooltip: {
-    trigger: 'itemStyle',
+    trigger: "itemStyle",
     axisPointer: {
-      type: 'cross',
+      type: "cross",
       label: {
-        backgroundColor: '#6a7985'
-      }
-    }
+        backgroundColor: "#6a7985",
+      },
+    },
   },
   grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
+    left: "3%",
+    right: "4%",
+    bottom: "3%",
+    containLabel: true,
   },
   xAxis: {
-    type: 'category',
+    type: "category",
     boundaryGap: false,
-    data: []
+    data: [],
   },
   yAxis: [
     {
-      type: 'value',
+      type: "value",
       scale: true,
       ...axisCommonOptions,
       splitLine: {
@@ -457,9 +469,9 @@ export const StatisticsOption = {
           color: "#6e7079",
         },
       },
-    }
-  ]
-}
+    },
+  ],
+};
 export const StatisticsOption_Old = {
   animation: false,
   tooltip: {
@@ -521,7 +533,7 @@ export const TypeToOption = {
   [ChartType.History]: HistoryOption,
   [ChartType.Equip]: EquipOption,
   [ChartType.Statis]: StatisticsOption,
-  [ChartType.SunTime]: SunTimeOption,
+  [ChartType.SunTime]: (data) => SunTimeOption(data),
 };
 
 export const cell_ids =

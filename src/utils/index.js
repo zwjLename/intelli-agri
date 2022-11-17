@@ -159,7 +159,7 @@ export const getDailyParamOption = (data, name) => {
       },
       label: {
         show: true,
-        position: 'bottom'
+        position: "bottom",
       },
       data: data.map((ele) => ele.min),
     },
@@ -169,81 +169,94 @@ export const getDailyParamOption = (data, name) => {
       emphasis: {
         focus: "series",
       },
-      data: data.map((ele) => ele.mean ),
+      data: data.map((ele) => ele.mean),
     },
     {
       name: "最大值",
       type: "line",
       emphasis: {
-        focus: 'series'
+        focus: "series",
       },
       label: {
         show: true,
-        position: 'top'
+        position: "top",
       },
-      
-      data: data.map((ele) => ele.max ),
+
+      data: data.map((ele) => ele.max),
     }
   );
   option.series = yData;
   option.tooltip = {
-    trigger: 'axis',
+    trigger: "axis",
     axisPointer: {
-      type: 'cross',
+      type: "cross",
       label: {
-        backgroundColor: '#6a7985'
-      }
-    }
-  }
-  console.log(
-    "%c [ option ]-156",
-    "font-size:13px; background:green; color:#bf2c9f;",
-    option
-  );
-  return { ...option };
+        backgroundColor: "#6a7985",
+      },
+    },
+  };
+  const newOption = { ...option, grid: { ...option.grid, top: "10px" } };
+  return newOption;
 };
 
 // 获取日出日落图的option
 export const getSunTimeOption = (sunTimeData, time) => {
-  const option = TypeToOption[ChartType.SunTime];
-  let ySunRise = sunTimeData.map((ele) =>
-    new Date(`${ele.date} ${ele.rise}`).getTime()
-  );
-  let ySunSet = sunTimeData.map((ele) =>
-    new Date(`${ele.date} ${ele.set}`).getTime()
-  );
+  const option = TypeToOption[ChartType.SunTime](sunTimeData);
+  option.series = [
+    {
+      type: "candlestick",
+      data: sunTimeData.map((ele) => [
+        ele.rise_5min,
+        ele.set_5min,
+        ele.rise_5min,
+        ele.set_5min,
+      ]),
+      itemStyle: {
+        color: "#5470c6",
+        borderColor: "5470c6",
+      },
+    },
+  ];
+  option.xAxis.data = sunTimeData.map((ele) => ele.date);
+  // let ySunRise = sunTimeData.map((ele) =>
+  //   new Date(`${ele.date} ${ele.rise}`).getTime()
+  // );
+  // let ySunSet = sunTimeData.map((ele) =>
+  //   new Date(`${ele.date} ${ele.set}`).getTime()
+  // );
 
-  option.xAxis.data = sunTimeData.map((ele) => ele.date) || [];
+  // option.xAxis.data = sunTimeData.map((ele) => ele.date) || [];
 
-  option.series[0] = {
-    name: "日出",
-    data: ySunRise,
-    yAxisIndex: 0,
-  };
-  option.series[1] = {
-    name: "日落",
-    data: ySunSet,
-    yAxisIndex: 0,
-  };
+  // option.series[0] = {
+  //   name: "日出",
+  //   data: ySunRise,
+  //   yAxisIndex: 0,
+  // };
+  // option.series[1] = {
+  //   name: "日落",
+  //   data: ySunSet,
+  //   yAxisIndex: 0,
+  // };
 
-  option.series.forEach((item, _) => {
-    item.type = "bar";
-  });
-  const getMinTime = (time) => {
-    switch (time) {
-      case Time.yesterday:
-        return moment().subtract("2", "days");
-      case Time.oneWeek:
-        return moment().subtract("7", "days");
-      case Time.oneMonth:
-        return moment().subtract("30", "days");
-      case Time.threeMonth:
-        return moment().subtract("3", "months");
-      default:
-        return moment();
-    }
-  };
-  option.yAxis.min = new Date(getMinTime(time)).getTime();
+  // option.series.forEach((item, _) => {
+  //   item.type = "bar";
+  // });
+  // const getMinTime = (time) => {
+  //   switch (time) {
+  //     case Time.yesterday:
+  //       return moment().subtract("2", "days");
+  //     case Time.oneWeek:
+  //       return moment().subtract("7", "days");
+  //     case Time.oneMonth:
+  //       return moment().subtract("30", "days");
+  //     case Time.threeMonth:
+  //       return moment().subtract("3", "months");
+  //     default:
+  //       return moment();
+  //   }
+  // };
+  // option.yAxis.min = new Date(getMinTime(time)).getTime();
+
   return { ...option };
 };
 
@@ -259,15 +272,20 @@ export const getRadiationOption = (data, type) => {
     switch (Number(type)) {
       case RAttr.dailyTotalRad:
         yData.push(item.dailyTotalRad); // 日总辐射
+        option.yAxis.name = "w/m2/d";
+       
         break;
       case RAttr.dailyAvgRad:
         yData.push(item.dailyAvgRad); // 日均辐射
+        option.yAxis.name = "w/m2/h";
         break;
       case RAttr.peakHours:
         yData.push(item.peakHours); // 峰值日照时间
+        option.yAxis.name = "时长";
         break;
       case RAttr.dli:
         yData.push(item.dli); // 光积分DLI
+        option.yAxis.name = "mol/m2/d";
         break;
       default:
         break;
@@ -276,6 +294,7 @@ export const getRadiationOption = (data, type) => {
   option.series[0].name = RAttrItem[type];
   option.xAxis.data = xData;
   option.series[0].data = yData;
-
+  option.grid.top = '10%'
+ 
   return { ...option };
 };

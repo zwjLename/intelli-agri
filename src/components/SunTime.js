@@ -1,5 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
+// import {connect} from "react-redux";
 import {Radiation} from "./Radiation";
 import "./SunTime.scss";
 
@@ -15,10 +15,11 @@ const SunTimeUI = ({
     </div>
   )
 };
-export const SunTime = connect(
-  state =>({
-    time: state.time,
-    mapData: state.mapData
-  }),
-  {}
-)(SunTimeUI);
+export const SunTime = SunTimeUI
+// export const SunTime = connect(
+//   state =>({
+//     time: state.time,
+//     mapData: state.mapData
+//   }),
+//   {}
+// )(SunTimeUI);

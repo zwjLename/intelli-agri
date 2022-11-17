@@ -45,7 +45,7 @@ const RealTimeUI = ({
 
 export const RealTime = connect(
   state => ({
-    time: state.time,
+    time: state.terminal.time,
     mapData: state.mapData,
     attri: state.menu
   }),

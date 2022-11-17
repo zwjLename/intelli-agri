@@ -46,7 +46,7 @@ const RadiationUI = ({ time, mapData }) => {
 
 export const Radiation = connect(
   (state) => ({
-    time: state.time,
+    time: state.terminal.time,
     mapData: state.mapData,
   }),
   {}

@@ -11,14 +11,14 @@
   .detail {
     display: flex;
     height: calc(100% - 30px);
-    .left {
-      width: calc(20% - 5px);
-      height: 100%;
-    }
+    // .left {
+    //   width: calc(20% - 5px);
+    //   height: 100%;
+    // }
     .right {
       display: flex;
       flex-direction: column;
-      width: calc(70% - 5px);
+      width: calc(100% - 5px);
       height: 100%;
       .menu {
         height: 30px;
