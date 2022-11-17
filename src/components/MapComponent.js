@@ -11,6 +11,7 @@ import { cell_ids, cellToTem, termToCell } from "./const.tsx";
 import "./MapComponent.scss";
 
 const { BMap, BMAP_HYBRID_MAP } = window;
+console.log('%c [ BMap ]-14', 'font-size:13px; background:pink; color:#bf2c9f;', BMap)
 
 
 const MapComponentUI = ({ current_point, mapData }) => {

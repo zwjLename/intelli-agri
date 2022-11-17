@@ -58,7 +58,7 @@ function App({ terminal }) {
             <div className="title-word"></div> */}
           </div>
           <div className="subtitle">
-            <img src={target} className="ml10" />
+            <img src={target} className="ml10" alt="target"/>
             <div className="ml10">INTELLTGENT</div>
             <div className="ml20">JIANGNING</div>
             <div className="ml20">PRODUCT</div>
@@ -73,7 +73,7 @@ function App({ terminal }) {
           </div>
         </div>
       </header>
-      <img src={hightLight} className="hight-light" />
+      <img src={hightLight} className="hight-light" alt="highlight"/>
       <div className="main-content">
         <div className="left">
           <div className="flex-column main mt10">

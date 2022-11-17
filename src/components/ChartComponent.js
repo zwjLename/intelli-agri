@@ -12,6 +12,7 @@ export const ChartComponent = ({
   const chartRef = React.useRef(null);
   const chartInstance = React.useRef(null);
   // 窗口大小变化，调整画布大小
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const resize = () => {
     if (chartInstance.current) {
       chartInstance.current.resize();
@@ -48,6 +49,7 @@ export const ChartComponent = ({
     // 每次重新渲染时，销毁上次实例，取消事件监听
     return function cleanup() {
       if (chartRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         removeListener(chartRef.current, resize);
       }
       if (chartInstance.current) {

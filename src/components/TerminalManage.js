@@ -1,11 +1,11 @@
 import React from "react";
 import { ChartComponent } from "./ChartComponent";
-import { ChartType, TypeToOption, Time, TAttr, temids } from "./const.tsx";
+import { ChartType, TypeToOption, TAttr, temids } from "./const.tsx";
 import "./style.scss";
 import { TimeComponent } from "./TimeComponent";
 import "./TerminalManage.scss";
 import { TerminalMenu } from "./TerminalMenu";
-import { getTerminalStatus, getTerminalHis } from "../api/api";
+import { getTerminalHis } from "../api/api";
 import { getTimePeriod, getEquipOption } from "../utils";
 import { connect } from "react-redux";
 import {

@@ -1,6 +1,5 @@
 import moment from "moment";
 import ReactDOMServer from "react-dom/server";
-import { isNumber } from "lodash";
 export enum WeatherKey {
   rainfall,
   sunshineTime,
