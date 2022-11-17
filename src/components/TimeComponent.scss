@@ -6,11 +6,11 @@
   color: $content-title;
   font-weight: bold;
   // text-align: center;
-  padding-left: 20px;
+  padding: 10px;
   &:hover {
-    border-left: 1px solid $content-title;
+    border: 1px solid $content-title;
   }
 }
 .time-btn-highlight {
-  border-left: 1px solid $content-title;
+  border: 1px solid $content-title;
 }

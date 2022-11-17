@@ -10,7 +10,7 @@ export const TimeComponent = ({
 }) => {
   const keys = Object.keys(TimeItem);
   return (
-    <div className={`flex-column ${className} ml10`} style={style}>
+    <div className={` ${className}`} style={style}>
       {keys.map((ele, ind) => (
         <div
           key={`realtime-${ind}`}

@@ -31,8 +31,6 @@ const TerminalManageCom = ({
     setAttri(menu.key);
   };
 
- 
-
   // 时间组件改变时
   React.useEffect(() => {
     const { startTime, endTime } = getTimePeriod(terminal.time); // period
@@ -76,20 +74,18 @@ const TerminalManageCom = ({
   }, [options, selectTerminalId, terminal.idToName]);
   return (
     <div className="terminal-manage">
-     
-      <div className="content">
-        <div className="chart-part">
-          <TerminalMenu activeKey={attri} onChange={onMenuChange} />
-          <div className="condition-realtime-echart">{renderChart}</div>
-        </div>
-        <div className="time-part">
-          <TimeComponent
-            activeKey={terminal.time}
-            onChange={(e) => {
-              changeTime(e);
-            }}
-          />
-        </div>
+      <div className="time-part">
+        <TimeComponent
+          className="time-com"
+          activeKey={terminal.time}
+          onChange={(e) => {
+            changeTime(e);
+          }}
+        />
+      </div>
+      <div className="chart-part mt10">
+        <TerminalMenu activeKey={attri} onChange={onMenuChange} />
+        <div className="condition-realtime-echart">{renderChart}</div>
       </div>
     </div>
   );

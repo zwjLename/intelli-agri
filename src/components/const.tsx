@@ -338,14 +338,11 @@ export const SunTimeOption = (
           color: "#6e7079",
         },
       },
-      // axisLabel: {
-      //   formatter: (value, itemIndex) => {
-      //     const item: SunTimeData = allData[itemIndex];
-      //     const {date = new Date(), set_5min = 0} = item || {}
-      //     console.log(item)
-      //     return `${moment(date).add(set_5min, 'm').format("HH:mm:ss")}`;
-      //   },
-      // },
+      axisLabel: {
+        formatter: (value) => {
+          return `${moment().startOf('day').add(value*5, 'm').format("HH:mm:ss")}`;
+        },
+      },
     },
   };
 };

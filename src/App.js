@@ -110,7 +110,7 @@ function App({ terminal }) {
 
         <div className="map flex flex-column">
           <div className="content-title flex flex-center">
-            终端在线：<span>{onlineNum}个</span>，离线：
+            终端<span className="font-big">在线</span>：<span>{onlineNum}个</span>，<span className="font-big">离线</span>：
             <span>{offlineNum}个</span>
           </div>
           <div className="flex flex-center">

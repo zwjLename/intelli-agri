@@ -26,7 +26,7 @@ export const getTimePeriod = (time) => {
       ret.startTime = m.format("YYYY-MM-DD 00:00:00");
       break;
     case Time.yesterday:
-      ret.startTime = m.subtract(1, "days").format(FORMAT_STR);
+      ret.startTime = m.subtract(1, "days").startOf('day').format(FORMAT_STR);
       break;
     case Time.oneWeek:
       ret.startTime = m.subtract(7, "days").format(FORMAT_STR);
@@ -39,6 +39,9 @@ export const getTimePeriod = (time) => {
       break;
     case Time.oneYear:
       ret.startTime = m.subtract(1, "years").format(FORMAT_STR);
+      break;
+    case Time.halfYear:
+      ret.startTime = m.subtract(0.5, "years").format(FORMAT_STR);
       break;
     default:
       ret.startTime = m.format("YYYY-MM-DD 00:00:00");
