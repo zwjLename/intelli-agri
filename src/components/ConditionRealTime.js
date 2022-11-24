@@ -1,6 +1,6 @@
 import React from "react";
 import { ChartComponent } from "./ChartComponent";
-import { ChartType, TypeToOption, EquipmentKey } from "./const.ts";
+import { ChartType, TypeToOption, EquipmentKey } from "./const.tsx";
 import "./style.scss";
 import { TodayEquipmentComponent } from "./TodayEquipmentComponent";
 

@@ -1,12 +1,13 @@
 import React from "react";
 import "./ButtonComponent.scss";
-import { Attr, AttrItem } from "./const.ts";
+import { Attr, AttrItem } from "./const.tsx";
 
 export const ButtonComponent = ({
   activeKey = Attr.warm,
   className = "",
   style = {},
-  onChange = () => {},
+  onChange = () => {
+  },
 }) => {
   const keys = Object.keys(AttrItem);
   return (

@@ -1,15 +1,16 @@
 import React from "react";
-import { TimeItem } from "./const.ts";
+import { TimeItem } from "./const.tsx";
 import "./TimeComponent.scss";
 
 export const TimeComponent = ({
   className = "",
   style = {},
   activeKey = "",
+  onChange,
 }) => {
   const keys = Object.keys(TimeItem);
   return (
-    <div className={`flex-column ${className} ml20`} style={style}>
+    <div className={` ${className}`} style={style}>
       {keys.map((ele, ind) => (
         <div
           key={`realtime-${ind}`}
@@ -17,6 +18,9 @@ export const TimeComponent = ({
           Number(activeKey)
             ? "time-btn-highlight"
             : ""}`}
+          onClick={() => {
+            onChange(ele * 1);
+          }}
         >
           {TimeItem[ele]}
         </div>
@@ -24,3 +28,4 @@ export const TimeComponent = ({
     </div>
   );
 };
+

@@ -1,0 +1,87 @@
+.BMap_bubble_title {
+  h4 {
+    color: #fff !important;
+  }
+
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  background: transparent !important;
+}
+.BMap_bubble_content {
+  color: #fff !important;
+}
+.BMap_pop .BMap_top {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 0 !important;
+}
+
+.BMap_pop .BMap_center {
+  width: 281px !important;
+  border: 0 !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.BMap_pop .BMap_bottom {
+  border: 0 !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.BMap_pop div:nth-child(3) {
+  background: transparent !important;
+}
+.BMap_pop div:nth-child(3) div {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 0 !important;
+}
+
+.BMap_pop div:nth-child(1) {
+  border-radius: 3px 0 0 0;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.BMap_pop div:nth-child(1) div {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.BMap_pop div:nth-child(5) {
+  border-radius: 0 0 0 3px;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.BMap_pop div:nth-child(5) div {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+.BMap_pop div:nth-child(7) {
+  background: transparent !important;
+  left: 226px;
+}
+
+.BMap_pop div:nth-child(7) div {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+img[src="http://api0.map.bdimg.com/images/iw3.png"]
+{
+  content: "";
+}
+img[src="https://api.map.baidu.com/images/iw3.png"]
+{
+    margin-top: -695px !important;
+    filter: alpha(opacity=70);
+  box-sizing: content-box;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  margin-left: -216px !important;
+//   margin-top: -691px;
+  max-width: none;
+  width: 690px;
+  height: 786px;
+  // content: url("../../public/message.png");
+  content: url("../../public/mapbg.png")
+}

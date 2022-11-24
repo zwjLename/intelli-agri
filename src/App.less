@@ -1,0 +1,29 @@
+@import "antd/lib/style/themes/dark.less";
+@import "antd/dist/antd.less";
+
+// 定制 antd
+@bg: #060711;
+@bgOp: rgba(6, 7, 17, .3);
+
+.ant-menu {
+  background-color: @bg;
+  border-bottom: none;
+}
+.ant-menu-submenu-popup > .ant-menu {
+  background-color: @bgOp;
+}
+.ant-menu-submenu-popup {
+  background-color: @bgOp;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: rgba(255, 255, 255, .3);
+  border-bottom: 1px solid @text-color;
+}
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item,
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu {
+  padding: 0 10px;
+}
+.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
+  right: 5px;
+  left: 5px;
+}

@@ -1,45 +1,53 @@
-import * as echarts from "echarts";
 import React from "react";
-import { ButtonComponent } from "./ButtonComponent";
 import { ChartComponent } from "./ChartComponent";
-import { AttrItem, TypeToOption, ChartType } from "./const.ts";
+import { TypeToOption, ChartType, AttrParam, AttrItem } from "./const.tsx";
+import { connect } from "react-redux";
+import { hisAggrQuery } from "../api/api";
+import { getTimePeriod, getRealTimeOption } from "../utils";
 
-export const RealTime = () => {
-  const [attri, setAttri] = React.useState(Attr.warm);
+const RealTimeUI = ({
+  time,
+  mapData,
+  attri
+}) => {
   const defaultOptions = TypeToOption[ChartType.RealTime];
   const [options, setOptions] = React.useState(defaultOptions);
 
   React.useEffect(
     () => {
-      if (attri !== Attr.warm) {
-        const optionscp = defaultOptions;
-        optionscp.series[0].name = AttrItem[attri];
-        optionscp.series[0].data = [20, 32, 11, 34, 90, 30, 10];
-        setOptions(optionscp);
-      } else {
-        setOptions(defaultOptions);
-      }
+      // 监听time、menu以及map的变化
+      const {startTime, endTime} = getTimePeriod(time);
+      hisAggrQuery({
+        term_id: `${mapData.termid}`,
+        type: AttrParam[attri],
+        start_time: startTime,
+        end_time: endTime
+      }).then(res => {
+        if (res) {
+          // 重绘chart
+          setOptions(getRealTimeOption(res, AttrItem[attri]));
+        }
+      });
     },
-    [attri, defaultOptions]
+    [attri, time, mapData.termid]
   );
+
   return (
     <div className="content-component realTime">
-      <div className="content-title ml20">实时数据</div>
-      <div className="content">
-        {/* <div> */}
-        <ButtonComponent
-          activeKey={attri}
-          className="ml20"
-          onChange={e => {
-            setAttri(e);
-          }}
-        />
-        <ChartComponent
-          type={ChartType.RealTime}
-          style={{ marginTop: "10px" }}
-          options={options}
-        />
-      </div>
+      <ChartComponent
+        type={ChartType.RealTime}
+        style={{ marginTop: "10px" }}
+        options={options}
+      />
     </div>
   );
 };
+
+export const RealTime = connect(
+  state => ({
+    time: state.terminal.time,
+    mapData: state.mapData,
+    attri: state.menu
+  }),
+  {}
+)(RealTimeUI);

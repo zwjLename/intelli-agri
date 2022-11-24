@@ -3,7 +3,7 @@
   color: #ffffff;
   height: 100%;
   .content {
-    padding: 0px 20px;
+    padding-right: 20px;
   }
 }
 
@@ -23,21 +23,17 @@
   }
 }
 .realTime {
-  .content {
-    margin-left: -5px;
-  }
-}
-.realTime {
-  height: calc(100% - 80px);
-  .content {
-    height: 100%;
-  }
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  // padding: 0 10px 10px 10px;
+  padding: 0px;
 }
 .history-chart-component {
   height: calc(100% - 50px);
 }
 .condition-realtime-echart {
-  height: calc(100% - 40px);
+  height: calc(100% - 50px);
 }
 .statistics-echart-com {
   height: calc(100% - 50px);

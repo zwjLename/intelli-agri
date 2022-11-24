@@ -1,0 +1,22 @@
+@import "../index.scss";
+.terminal-data {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .content-title {
+    flex: 0 0 30px;
+  }
+  .content-list {
+    display: flex;
+    height: calc(100% - 30px)
+  }
+  .chart-part {
+    width: calc(70% - 5px);
+    height: calc(100% - 10px);
+  }
+  .time-part {
+    width: calc(30% - 5px);
+    height: calc(100% - 10px);
+    background-size: cover;
+  }
+}
